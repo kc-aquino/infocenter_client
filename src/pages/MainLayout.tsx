@@ -1,19 +1,42 @@
-import { AppSidebar } from "@/components/app-sidebar"
-import { NavActions } from "@/components/nav-actions"
+import { AppSidebar } from '@/components/app-sidebar';
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbPage,
-} from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
+} from '@/components/ui/breadcrumb';
+import { Separator } from '@/components/ui/separator';
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar"
+} from '@/components/ui/sidebar';
+import { Outlet, useLocation } from 'react-router-dom';
 
 export default function Page() {
+  const location = useLocation();
+
+  const pageTitles: { [key: string]: string } = {
+    '/': 'Home',
+    '/about': 'About Us',
+    '/register': 'Register',
+    '/contact': 'Contact',
+    '/data-privacy': 'Data Privacy',
+    '/fire': 'Fire Safety',
+    '/first-aid': 'First Aid',
+    '/flood': 'Flood Safety',
+    '/garbage': 'Garbage Disposal',
+    '/pharmacy': 'Pharmacy',
+    '/power': 'Power Outage Info',
+    '/shelter': 'Shelter Locations',
+    '/traffic': 'Traffic Updates',
+    '/water': 'Water Supply',
+    '/weather': 'Weather Forecast',
+  };
+
+  // Get the title based on the current path; default is "Home"
+  const pageTitle = pageTitles[location.pathname] || '/';
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -26,21 +49,18 @@ export default function Page() {
               <BreadcrumbList>
                 <BreadcrumbItem>
                   <BreadcrumbPage className="line-clamp-1">
-                    Project Management & Task Tracking
+                    {pageTitle}
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
           </div>
-          <div className="ml-auto px-3">
-            <NavActions />
-          </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 px-4 py-10">
-          <div className="mx-auto h-24 w-full max-w-3xl rounded-xl bg-muted/50" />
-          <div className="mx-auto h-full w-full max-w-3xl rounded-xl bg-muted/50" />
+        <Separator className="bg-orange-400 w-full" />
+        <div className="flex flex-1 flex-col">
+          <Outlet /> {/* Render nested routes */}
         </div>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }
