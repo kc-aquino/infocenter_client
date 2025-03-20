@@ -47,7 +47,7 @@ export default function RegisterPage() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center bg-gray-100 bg-opacity-50 relative"
+      className="min-h-screen flex items-center justify-center bg-gray-100 bg-opacity-50 relative bg-no-repeat bg-cover"
       style={{ backgroundImage: `url(${bgImage})` }}
     >
       {/* Content Container */}
