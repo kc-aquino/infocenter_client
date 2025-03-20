@@ -14,7 +14,7 @@ function Home() {
         <div className="flex flex-col w-full lg:w-3/4 gap-5">
           {/* Dashboard Header */}
           <div className="">
-            <div className="text-2xl">Dashboard</div>
+            <div className="text-xs">Dashboard</div>
             <div className="bg-no-repeat bg-cover bg-[url('/src/assets/registerBG.png')] h-[298px] w-full p-5 flex justify-end items-end">
               <div className="flex flex-col bg-gray-200 bg-opacity-25 p-5 rounded-lg">
                 <h1>Emergency Numbers</h1>
