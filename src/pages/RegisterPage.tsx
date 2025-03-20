@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 
-import bgImage from '@/assets/registerBg.png';
+import bgImage from '@/assets/registerBG.png';
 import brgLogo from '@/assets/brgylogotrns1.png';
 
 export default function RegisterPage() {
