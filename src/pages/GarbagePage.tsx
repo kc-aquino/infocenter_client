@@ -6,6 +6,7 @@ const GarbagePage = () => {
         title: 'Garbage Alerts',
         description: 'Stay informed about the latest garbage collection updates and safety measures in your area.',
         header: {
+            type: 'garbage'
         },
         advisories: [
           {
@@ -42,7 +43,7 @@ const GarbagePage = () => {
       }
 
   return (
-    <div className='m-0 md:m-10 my-5  overflow-hidden'>
+    <div className='m-0 md:m-10 md:my-5  overflow-hidden'>
         <Advisories  {...advisoryData}/>
     </div>
   );
