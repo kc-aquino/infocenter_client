@@ -48,7 +48,7 @@ export default function Page() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbPage className="line-clamp-1">
+                  <BreadcrumbPage className="line-clamp-1 font-semibold text-lg text-orange-500">
                     {pageTitle}
                   </BreadcrumbPage>
                 </BreadcrumbItem>

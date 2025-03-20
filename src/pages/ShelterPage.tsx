@@ -7,8 +7,8 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { MapPin } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import shelter1img from '@/assets/ShelterPage/shelter1.png';
-import shelter2img from '@/assets/ShelterPage/shelter2.png';
+import shelter1img from '@/assets/shelterPage/shelter1.png';
+import shelter2img from '@/assets/shelterPage/shelter2.png';
 
 // Fix missing marker icons in Leaflet
 import markerIconPng from 'leaflet/dist/images/marker-icon.png';
@@ -28,14 +28,16 @@ const ShelterPage = () => {
       address: 'MWVM+Q2W, M. Sioson St, Malabon, 1470 Metro Manila',
       description:
         'The maximum temperature today is near 86 degrees. A partly cloudy and warm day is expected. The lowest relative humidity is near 33 percent. Expect 13 hours of sunshine...',
+      gmapLocation: 'https://maps.app.goo.gl/AwVf3dMR5JpzVNoGA',
     },
     'shelter-2': {
-      name: 'Hayagan Medical',
+      name: 'Hayagan Medical Laboratory',
       position: position2,
       image: shelter2img,
       address: 'MWVM+Q2W, M. Sioson St, Malabon, 1470 Metro Manila',
       description:
         'The maximum temperature today is near 86 degrees. A partly cloudy and warm day is expected. The lowest relative humidity is near 33 percent. Expect 13 hours of sunshine...',
+      gmapLocation: 'https://maps.app.goo.gl/dmiuhszLig7wTZ2G9',
     },
   };
 
@@ -91,7 +93,7 @@ const ShelterPage = () => {
             {/* Shelter Details */}
             <Card className="bg-white/80 shadow-lg rounded-lg h-auto border border-orange-500">
               <CardContent>
-                <Avatar className="mx-auto mb-4 w-full h-80 rounded-none">
+                <Avatar className="mx-auto mb-4 w-full h-80 rounded-lg">
                   <AvatarImage
                     src={activeShelter.image}
                     alt={`Shelter Image ${activeTab}`}
@@ -111,7 +113,13 @@ const ShelterPage = () => {
               </CardContent>
 
               <CardFooter className="mt-10">
-                <Button className="w-full" variant="default">
+                <Button
+                  className="w-full"
+                  variant="default"
+                  onClick={() =>
+                    window.open(activeShelter.gmapLocation, '_blank')
+                  }
+                >
                   Go to Location
                 </Button>
               </CardFooter>
