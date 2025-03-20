@@ -4,7 +4,6 @@ import MainLayout from './pages/MainLayout';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Home from '@/pages/Home';
-import AboutPage from '@/pages/AboutPage';
 import ContactPage from '@/pages/ContactPage';
 import DataPrivPage from '@/pages/DataPrivPage';
 import FirePage from '@/pages/FirePage';
@@ -25,7 +24,6 @@ function App() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
-          <Route path="about" element={<AboutPage />} />
           <Route path="contact" element={<ContactPage />} />
           <Route path="data-privacy" element={<DataPrivPage />} />
           <Route path="fire" element={<FirePage />} />
