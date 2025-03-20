@@ -27,7 +27,7 @@ export default function Page() {
     '/flood': 'Flood Safety',
     '/garbage': 'Garbage Disposal',
     '/pharmacy': 'Pharmacy',
-    '/shelter': 'Shelter Locations',
+    '/shelter': 'Shelter',
     '/traffic': 'Traffic Updates',
     '/tsunami': 'Tsunami Safety',
     '/utilities': 'Utilities',
