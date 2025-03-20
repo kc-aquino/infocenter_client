@@ -12,12 +12,11 @@ import FirstAidPage from '@/pages/FirstAidPage';
 import FloodPage from '@/pages/FloodPage';
 import GarbagePage from '@/pages/GarbagePage';
 import PharmacyPage from '@/pages/PharmacyPage';
-import PowerPage from '@/pages/PowerPage';
 import RegisterPage from '@/pages/RegisterPage';
 import ShelterPage from '@/pages/ShelterPage';
 import TsunamiPage from '@/pages/TsunamiPage';
 import TrafficPage from '@/pages/TrafficPage';
-import WaterPage from '@/pages/WaterPage';
+import UtilitiesPage from '@/pages/UtilitiesPage';
 import Weather from '@/pages/WeatherPage';
 
 function App() {
@@ -34,12 +33,11 @@ function App() {
           <Route path="flood" element={<FloodPage />} />
           <Route path="garbage" element={<GarbagePage />} />
           <Route path="pharmacy" element={<PharmacyPage />} />
-          <Route path="power" element={<PowerPage />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="shelter" element={<ShelterPage />} />
           <Route path="tsunami" element={<TsunamiPage />} />
           <Route path="traffic" element={<TrafficPage />} />
-          <Route path="water" element={<WaterPage />} />
+          <Route path="utilities" element={<UtilitiesPage />} />
           <Route path="weather" element={<Weather />} />
         </Route>
       </Routes>

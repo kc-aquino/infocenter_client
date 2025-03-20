@@ -27,10 +27,10 @@ export default function Page() {
     '/flood': 'Flood Safety',
     '/garbage': 'Garbage Disposal',
     '/pharmacy': 'Pharmacy',
-    '/power': 'Power Outage Info',
     '/shelter': 'Shelter Locations',
     '/traffic': 'Traffic Updates',
-    '/water': 'Water Supply',
+    '/tsunami': 'Tsunami Safety',
+    '/utilities': 'Utilities',
     '/weather': 'Weather Forecast',
   };
 

@@ -2,13 +2,12 @@ import * as React from 'react';
 import {
   Home,
   BadgeInfo,
-  AtSign,
+  HousePlug,
   BadgePlus,
   Warehouse,
   Droplets,
   HeartPulse,
   Waves,
-  Zap,
   Trash2,
   Flame,
   CloudSun,
@@ -17,10 +16,8 @@ import {
   BriefcaseMedical,
 } from 'lucide-react';
 
-import { NavFavorites } from '@/components/nav-favorites';
 import { NavMain } from '@/components/nav-main';
 import { NavSecondary } from '@/components/nav-secondary';
-import { NavWorkspaces } from '@/components/nav-workspaces';
 import {
   Sidebar,
   SidebarContent,
@@ -42,12 +39,6 @@ const data = {
       title: 'About Us',
       url: '/about',
       icon: BadgeInfo,
-    },
-    {
-      title: 'Account',
-      url: '#',
-      icon: AtSign,
-      isActive: true,
     },
     {
       title: 'Registration',
@@ -78,11 +69,6 @@ const data = {
       icon: Waves,
     },
     {
-      title: 'Power',
-      url: '/power',
-      icon: Zap,
-    },
-    {
       title: 'Garbage',
       url: '/garbage',
       icon: Trash2,
@@ -103,9 +89,9 @@ const data = {
       icon: Car,
     },
     {
-      title: 'Water',
-      url: '/water',
-      icon: Droplet,
+      title: 'Utilities',
+      url: '/utilities',
+      icon: HousePlug,
     },
     {
       title: 'First Aid',
