@@ -2,7 +2,8 @@ import { Siren, LifeBuoy, Flame, HeartPulse, UtilityPole, Droplet} from 'lucide-
 
 export interface DataFile {
     title?: string;
-    number?: string;
+    Landline?: string | string[];
+    Mobile?: string | string[];
     title1?: string;
     description?: string;
     logo?: React.ComponentType;
@@ -10,12 +11,12 @@ export interface DataFile {
 
 
 export const DataNum: DataFile[] = [
-    {title: 'Police', number: '09123453', logo: Siren},
-    {title: 'Rescue', number: '034234', logo: LifeBuoy},
-    {title: 'Fire', number: '09234324', logo: Flame},
-    {title: 'Medical', number: '09324234', logo: HeartPulse},
-    {title: 'Power', number: '0423423', logo: UtilityPole},
-    {title: 'Water', number: '0123423423', logo: Droplet},
+    {title: 'Police', Landline: ['123-4567', '987-6543'], logo: Siren, Mobile: ['09123453', '09123453'], },
+    {title: 'Rescue', Landline: '09123453', logo: LifeBuoy, Mobile: ['09123453', '09123453']},
+    {title: 'Fire', Landline: '09123453', logo: Flame, Mobile: ['09123453', '09123453']},
+    {title: 'Medical', Landline: ['123-4567', '987-6543'], logo: HeartPulse, Mobile: ['09123453', '09123453']},
+    {title: 'Power', Landline: '09123453', logo: UtilityPole, Mobile: ['09123453', '09123453']},
+    {title: 'Water', Landline: '09123453', logo: Droplet, Mobile: ['09123453', '09123453']},
 ];
 
 export const AboutUs: DataFile[] = [
