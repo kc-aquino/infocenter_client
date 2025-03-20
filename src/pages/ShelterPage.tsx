@@ -7,8 +7,8 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { MapPin } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import shelter1img from '@/assets/ShelterPage/shelter1.png';
-import shelter2img from '@/assets/ShelterPage/shelter2.png';
+import shelter1img from '@/assets/shelterPage/shelter1.png';
+import shelter2img from '@/assets/shelterPage/shelter2.png';
 
 // Fix missing marker icons in Leaflet
 import markerIconPng from 'leaflet/dist/images/marker-icon.png';
