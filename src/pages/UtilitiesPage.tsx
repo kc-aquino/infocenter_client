@@ -44,7 +44,7 @@ const UtilitiesPage = () => {
       }
 
     return (
-    <div className='m-10 my-5 overflow-hidden'>
+    <div className='m-0 md:m-10 my-5  overflow-hidden'>
         <Advisories  {...advisoryData}/>
     </div>
   );
