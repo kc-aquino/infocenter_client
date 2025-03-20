@@ -36,11 +36,6 @@ const data = {
       icon: Home,
     },
     {
-      title: 'About Us',
-      url: '/about',
-      icon: BadgeInfo,
-    },
-    {
       title: 'Registration',
       url: '/register',
       icon: BadgePlus,
@@ -113,7 +108,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <NavMain items={data.navMain} />
       </SidebarHeader>
-      <Separator className="bg-white w-full  " />
+      <Separator className="bg-white w-full my-1" />
       <SidebarContent>
         <NavSecondary items={data.navSecondary} />
       </SidebarContent>
