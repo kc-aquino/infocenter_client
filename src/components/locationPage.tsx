@@ -14,7 +14,6 @@ import markerShadowPng from 'leaflet/dist/images/marker-shadow.png';
 
 const LocationPage = ({ locations, defaultTab, title }) => {
   const [activeTab, setActiveTab] = useState(defaultTab);
-
   const activeLocation = locations[activeTab];
 
   return (
@@ -39,39 +38,33 @@ const LocationPage = ({ locations, defaultTab, title }) => {
         </div>
 
         <TabsContent value={activeTab}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex flex-col md:flex-row gap-4 h-full">
             {/* Map Card */}
-            <Card className="bg-white/80 shadow-lg rounded-lg h-auto border border-orange-500 p-[-10]">
-              <CardContent className="w-full h-full p-0">
-                <MapContainer
-                  center={activeLocation.position}
-                  zoom={100}
-                  style={{
-                    height: '100%',
-                    width: '100%',
-                    borderRadius: '0.5rem',
-                  }}
+            <div className="flex-1 bg-white/80 shadow-lg rounded-lg border border-orange-500">
+              <MapContainer
+                center={activeLocation.position}
+                zoom={15}
+                className="w-full h-[300px] md:h-full rounded-md" // Fixed height for small devices
+              >
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                <Marker
+                  position={activeLocation.position}
+                  icon={
+                    new L.Icon({
+                      iconUrl: markerIconPng,
+                      shadowUrl: markerShadowPng,
+                      iconSize: [25, 41],
+                      iconAnchor: [12, 41],
+                    })
+                  }
                 >
-                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                  <Marker
-                    position={activeLocation.position}
-                    icon={
-                      new L.Icon({
-                        iconUrl: markerIconPng,
-                        shadowUrl: markerShadowPng,
-                        iconSize: [25, 41],
-                        iconAnchor: [12, 41],
-                      })
-                    }
-                  >
-                    <Popup>{activeLocation.name}</Popup>
-                  </Marker>
-                </MapContainer>
-              </CardContent>
-            </Card>
+                  <Popup>{activeLocation.name}</Popup>
+                </Marker>
+              </MapContainer>
+            </div>
 
             {/* Location Details */}
-            <Card className="bg-white/80 shadow-lg rounded-lg h-auto border border-orange-500">
+            <Card className="flex-1 bg-white/80 shadow-lg rounded-lg border border-orange-500">
               <CardContent>
                 <Avatar className="mx-auto mb-4 w-full h-80 rounded-lg">
                   <AvatarImage
