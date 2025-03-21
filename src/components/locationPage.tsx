@@ -11,17 +11,27 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 // Fix missing marker icons in Leaflet
 import markerIconPng from 'leaflet/dist/images/marker-icon.png';
 import markerShadowPng from 'leaflet/dist/images/marker-shadow.png';
-
 interface LocationPageProps {
-  name: string;
-  address: string;
-  description: string;
-  position: [number, number];
-  image: string;
-  location_link: string;
+  locations: Record<
+    string,
+    {
+      name: string;
+      address: string;
+      description: string;
+      position: [number, number];
+      image: string;
+      location_link: string;
+    }
+  >;
+  defaultTab: string;
+  title: string;
 }
 
-const LocationPage = ({ locations, defaultTab, title }) => {
+const LocationPage: React.FC<LocationPageProps> = ({
+  locations,
+  defaultTab,
+  title,
+}) => {
   const [activeTab, setActiveTab] = useState(defaultTab);
   const activeLocation = locations[activeTab];
 
