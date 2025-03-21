@@ -51,7 +51,9 @@ const ShelterPage = () => {
         onValueChange={value => setActiveTab(value)}
       >
         <div className="flex items-center justify-between mb-4">
-          <h1 className="text-2xl font-semibold">{activeShelter.name}</h1>
+          <h1 className="text-2xl font-semibold text-orange-500">
+            {activeShelter.name}
+          </h1>
           <TabsList className="flex w-50 justify-end items-center">
             <TabsTrigger value="shelter-1">Shelter 1</TabsTrigger>
             <TabsTrigger value="shelter-2">Shelter 2</TabsTrigger>
@@ -61,8 +63,8 @@ const ShelterPage = () => {
         <TabsContent value={activeTab}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Map API */}
-            <Card className="bg-white/80 shadow-lg rounded-lg h-auto border border-orange-500">
-              <CardContent className="p-0  h-full">
+            <Card className="bg-white/80 shadow-lg rounded-lg h-auto border border-orange-500 p-[-10]">
+              <CardContent className="w-full h-full p-0">
                 <MapContainer
                   center={activeShelter.position}
                   zoom={100}
@@ -112,7 +114,7 @@ const ShelterPage = () => {
                 <p className="text-justify mt-2">{activeShelter.description}</p>
               </CardContent>
 
-              <CardFooter className="mt-10">
+              <>
                 <Button
                   className="w-full"
                   variant="default"
@@ -122,7 +124,7 @@ const ShelterPage = () => {
                 >
                   Go to Location
                 </Button>
-              </CardFooter>
+              </>
             </Card>
           </div>
         </TabsContent>
