@@ -1,4 +1,5 @@
 import { Siren, LifeBuoy, Flame, HeartPulse, UtilityPole, Droplet} from 'lucide-react';
+import axios from "axios";
 
 export interface DataFile {
     title?: string;
@@ -23,3 +24,20 @@ export const AboutUs: DataFile[] = [
     {title1: 'Our Vision', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.'},
     {title1: 'Our Mission', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.'},
 ];
+
+
+
+const API_URL = "http://api.weatherapi.com/v1/current.json";
+const API_KEY = "4630c665451a4d3584e25043252103";
+const LOCATION = "14.662,120.956";
+
+
+export const fetchWeatherData = async () => {
+  try {
+    const response = await axios.get(`${API_URL}?key=${API_KEY}&q=${LOCATION}`);
+    return response.data; 
+  } catch (error) {
+    console.error("Error fetching weather data:", error);
+    return null; 
+  }
+};
