@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 
+import TermsAndPrivacyDialog from '@/components/termsAndPrivacyDialog';
 import bgImage from '@/assets/registerBG.png';
 import brgLogo from '@/assets/brgylogotrns1.png';
 
@@ -167,7 +168,9 @@ export default function RegisterPage() {
             <p className="text-sm">
               {'By clicking continue, you agree to our '}
               <br />
-              <Link
+              <TermsAndPrivacyDialog />
+              <br />
+              {/* <Link
                 className="!underline !text-gray-500"
                 to="/terms-of-service"
                 target="_blank"
@@ -183,7 +186,7 @@ export default function RegisterPage() {
                 rel="noopener noreferrer"
               >
                 Privacy Policy
-              </Link>
+              </Link> */}
               .
             </p>
           </CardFooter>
