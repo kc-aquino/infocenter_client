@@ -99,7 +99,7 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar className="border-r-0 " {...props}>
-      <Avatar className="mb-4 w-30 h-30 mx-auto">
+      <Avatar className="w-30 h-30 mx-auto my-4">
         <AvatarImage src={LogoBrg} />
         <AvatarFallback>InfoCenter</AvatarFallback>
       </Avatar>
