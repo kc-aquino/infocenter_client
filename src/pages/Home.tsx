@@ -116,7 +116,7 @@ function Home() {
             {modalType && (
               <div className="fixed inset-0 bg-gray-200 bg-opacity-50 flex items-center justify-center">
                 <div className="bg-white p-6 rounded-lg shadow-lg max-w-md">
-                  <h2 className="text-xl font-bold mb-2">
+                  <h2 className="text-xl font-bold mb-2 md">
                     {modalType === "terms" ? "Terms and Conditions" : "Privacy Policy"}
                   </h2>
                   <p className="text-gray-600">
