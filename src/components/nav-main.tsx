@@ -1,6 +1,5 @@
 'use client';
-import { useLocation } from 'react-router-dom';
-
+import { useLocation, useNavigate } from 'react-router-dom';
 import { type LucideIcon } from 'lucide-react';
 
 import {
@@ -20,11 +19,20 @@ export function NavMain({
   }[];
 }) {
   const location = useLocation();
+  const navigate = useNavigate();
+
   return (
     <SidebarMenu>
       {items.map(item => (
         <SidebarMenuItem key={item.title}>
-          <SidebarMenuButton asChild isActive={location.pathname === item.url}>
+          <SidebarMenuButton
+            asChild
+            isActive={location.pathname === item.url} // Check active route
+            onClick={event => {
+              event.preventDefault(); // Prevent default behavior
+              navigate(item.url); // Programmatic navigation
+            }}
+          >
             <a href={item.url}>
               <item.icon />
               <span>{item.title}</span>

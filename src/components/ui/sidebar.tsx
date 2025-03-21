@@ -509,6 +509,11 @@ function SidebarMenuButton({
   const Comp = asChild ? Slot : 'button';
   const { isMobile, state } = useSidebar();
 
+  const handleClick = (event: React.MouseEvent) => {
+    event.preventDefault(); // Prevent default behavior
+    onClick?.(event); // Call the provided onClick handler
+  };
+
   const button = (
     <Comp
       data-slot="sidebar-menu-button"
@@ -516,6 +521,7 @@ function SidebarMenuButton({
       data-size={size}
       data-active={isActive}
       className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
+      onClick={handleClick}
       {...props}
     />
   );
