@@ -1,11 +1,8 @@
 import './App.css';
-import { useState } from 'react';
 import MainLayout from './pages/MainLayout';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Home from '@/pages/Home';
-import ContactPage from '@/pages/ContactPage';
-import DataPrivPage from '@/pages/DataPrivPage';
 import FirePage from '@/pages/FirePage';
 import FirstAidPage from '@/pages/FirstAidPage';
 import FloodPage from '@/pages/FloodPage';
@@ -24,17 +21,15 @@ function App() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
-          <Route path="contact" element={<ContactPage />} />
-          <Route path="data-privacy" element={<DataPrivPage />} />
+          <Route path="register" element={<RegisterPage />} />
           <Route path="fire" element={<FirePage />} />
           <Route path="first-aid" element={<FirstAidPage />} />
           <Route path="flood" element={<FloodPage />} />
           <Route path="garbage" element={<GarbagePage />} />
           <Route path="pharmacy" element={<PharmacyPage />} />
-          <Route path="register" element={<RegisterPage />} />
           <Route path="shelter" element={<ShelterPage />} />
-          <Route path="tsunami" element={<TsunamiPage />} />
           <Route path="traffic" element={<TrafficPage />} />
+          <Route path="tsunami" element={<TsunamiPage />} />
           <Route path="utilities" element={<UtilitiesPage />} />
           <Route path="weather" element={<Weather />} />
         </Route>

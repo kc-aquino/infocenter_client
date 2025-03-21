@@ -15,7 +15,7 @@ import {
 
 type Header = {
   headerTitle?: string;
-  headerDescription?: string;
+  Description?: string;
   image?: string;
   type?: string;
 };

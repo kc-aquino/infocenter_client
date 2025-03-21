@@ -55,8 +55,8 @@ const TrafficPage = () => {
   };
 
   return (
-    <div className="m-0 md:m-10 md:my-5  overflow-hidden">
-      <div className="bg-orange-500 text-white flex justify-between items-center rounded-0 md:rounded-xl p-6">
+    <div className="m-0 md:m-10 md:my-5 overflow-hidden">
+      <div className="bg-orange-500 text-white flex justify-between items-center rounded-0 md:rounded-xl p-6 m-6 mb-0 h-auto">
         <div className=" sm:flex-row sm:items-center sm:justify-between w-full">
           <div>
             <h2 className="text-sm font-semibold ">

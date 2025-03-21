@@ -20,7 +20,6 @@ export default function Page() {
     '/': 'Home',
     '/about': 'About Us',
     '/register': 'Register',
-    '/contact': 'Contact',
     '/data-privacy': 'Data Privacy',
     '/fire': 'Fire Safety',
     '/first-aid': 'First Aid',
