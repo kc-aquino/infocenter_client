@@ -105,12 +105,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </Avatar>
       <Separator className="bg-white w-full" />
 
-      <SidebarHeader>
+      <SidebarHeader className="text-white">
         <NavMain items={data.navMain} />
       </SidebarHeader>
       <Separator className="bg-white w-full my-1" />
+
       <SidebarContent>
-        <NavSecondary items={data.navSecondary} />
+        <NavSecondary items={data.navSecondary} className="text-white" />
       </SidebarContent>
       <SidebarRail />
     </Sidebar>
