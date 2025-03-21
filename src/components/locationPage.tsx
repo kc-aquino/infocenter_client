@@ -12,6 +12,15 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import markerIconPng from 'leaflet/dist/images/marker-icon.png';
 import markerShadowPng from 'leaflet/dist/images/marker-shadow.png';
 
+interface LocationPageProps {
+  name: string;
+  address: string;
+  description: string;
+  position: [number, number];
+  image: string;
+  location_link: string;
+}
+
 const LocationPage = ({ locations, defaultTab, title }) => {
   const [activeTab, setActiveTab] = useState(defaultTab);
   const activeLocation = locations[activeTab];
@@ -90,7 +99,7 @@ const LocationPage = ({ locations, defaultTab, title }) => {
                   className="w-full"
                   variant="default"
                   onClick={() =>
-                    window.open(activeLocation.gmapLocation, '_blank')
+                    window.open(activeLocation.location_link, '_blank')
                   }
                 >
                   Go to Location
