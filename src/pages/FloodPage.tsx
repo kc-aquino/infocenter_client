@@ -1,63 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Advisories } from '../components/advisories';
 import Tsunami from '../assets/Tsunami.png';
+import { fetchData } from '@/lib/api';
 
 const FloodPage = () => {
-  const advisoryData = {
+  const [advisoryData, setAdvisoryData] = useState({
     title: 'Flood Alerts',
     description:
       'Stay informed about the latest flood advisories and safety measures in your area.',
     header: {
       image: Tsunami,
     },
-    advisories: [
-      {
-        advisoryName: 'River Flood Warning',
-        advisoryDescription:
-          'Rivers are expected to overflow due to continuous heavy rainfall. Evacuate low-lying areas.',
-        advisoryStatus: 'Active',
-        advisoryDate: 'March 20, 2025',
-      },
-      {
-        advisoryName: 'Urban Flood Advisory',
-        advisoryDescription:
-          'Flooding expected in urban areas due to poor drainage systems. Avoid unnecessary travel.',
-        advisoryStatus: 'Active',
-        advisoryDate: 'March 19, 2025',
-      },
-      {
-        advisoryName: 'Flash Flood Watch',
-        advisoryDescription:
-          'Flash floods likely in hilly regions. Stay away from streams and rivers.',
-        advisoryStatus: 'Active',
-        advisoryDate: 'March 18, 2025',
-      },
-      {
-        advisoryName: 'Coastal Flood Warning',
-        advisoryDescription:
-          'High tides and storm surges expected to cause flooding in coastal areas. Evacuate if necessary.',
-        advisoryStatus: 'Active',
-        advisoryDate: 'March 21, 2025',
-      },
-      {
-        advisoryName: 'Dam Overflow Alert',
-        advisoryDescription:
-          'Water levels in nearby dams are critically high. Prepare for potential flooding.',
-        advisoryStatus: 'Active',
-        advisoryDate: 'March 22, 2025',
-      },
-      {
-        advisoryName: 'Flood Recovery Advisory',
-        advisoryDescription:
-          'Floodwaters are receding. Follow local authorities for cleanup and recovery guidelines.',
-        advisoryStatus: 'Upcoming',
-        advisoryDate: 'March 23, 2025',
-      },
-    ],
-  };
+    advisories: [],
+  });
+
+  useEffect(() => {
+    const fetchFloodData = async () => {
+      try {
+        const fetchedData = await fetchData('api/get-floods');
+
+        // Transform fetched data to match AdvisoriesProps
+        const formattedAdvisories = fetchedData.map((flood: any) => ({
+          advisoryName: flood.name,
+          advisoryDescription: flood.description,
+          advisoryStatus: flood.severity,
+          advisoryDate: new Date(flood.created_at).toLocaleString(), // Formatting date
+        }));
+
+        setAdvisoryData(prev => ({
+          ...prev,
+          advisories: formattedAdvisories,
+        }));
+
+        console.log('Formatted flood advisories:', formattedAdvisories);
+      } catch (error) {
+        console.error('Failed to fetch flood data:', error);
+      }
+    };
+
+    fetchFloodData();
+  }, []);
 
   return (
-    <div className="m-0 md:m-10 md:my-5  overflow-hidden">
+    <div className="m-0 md:m-10 md:my-5 overflow-hidden">
       <Advisories {...advisoryData} />
     </div>
   );
