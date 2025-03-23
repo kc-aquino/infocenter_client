@@ -27,10 +27,10 @@ export const AboutUs: DataFile[] = [
 
 
 
-const API_URL = "http://api.weatherapi.com/v1/forecast.json";
-const API_KEY = "4630c665451a4d3584e25043252103";
-const LOCATION = "manila";
-const DAYS = 7; // Fetch the full week
+const API_URL = import.meta.env.VITE_WEATHER_API_URL
+const API_KEY = import.meta.env.VITE_WEATHER_API_KEY
+const LOCATION = import.meta.env.VITE_WEATHER_LOCATION || "manila";
+const DAYS = import.meta.env.VITE_WEATHER_DAYS ; // Fetch the full week
 
 export const fetchWeatherData = async () => {
   try {
