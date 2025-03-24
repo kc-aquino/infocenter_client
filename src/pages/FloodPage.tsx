@@ -24,7 +24,7 @@ const FloodPage = () => {
           advisoryName: flood.name,
           advisoryDescription: flood.description,
           advisoryStatus: flood.severity,
-          advisoryDate: new Date(flood.date).toLocaleString(), // Formatting date
+          advisoryDate: new Date(flood.created_at).toLocaleString(), // Formatting date
         }));
 
         setAdvisoryData(prev => ({
