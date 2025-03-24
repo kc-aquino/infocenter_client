@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchWeatherData } from "@/components/data-file";
 import WeatherCard from '@/components/NotShadcnComponents/WeatherCard';
+import WeatherChart from '@/components/NotShadcnComponents/WeatherChart';
 
 const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const todayIndex = new Date().getDay();
@@ -58,12 +59,16 @@ const WeatherPage = () => {
 
       <div className='flex flex-col pt-7 w-full'>
         <h1 className='text-xl font-semibold text-[#FF6F00]'>Weekly Forecast</h1>
-        <div className='grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-5 mt-2 w-full'>
+        <WeatherChart></WeatherChart>
+        <div className='grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-5 mt-2 w-full p-5'>
           {weather?.forecast?.forecastday?.slice(1).map((dayData: any, index: number) => (
             <WeatherCard key={index} weatherData={dayData.day} day={weekDays[index + 1]} />
+            
           ))}
         </div>
       </div>
+
+      
     </div>
   );
 };
