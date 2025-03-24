@@ -10,7 +10,6 @@ export interface DataFile {
     logo?: React.ComponentType;
 }
 
-
 export const DataNum: DataFile[] = [
     {title: 'Police', Landline: ['123-4567', '987-6543'], logo: Siren, Mobile: ['09123453', '09123453'], },
     {title: 'Rescue', Landline: '09123453', logo: LifeBuoy, Mobile: ['09123453', '09123453']},
@@ -21,11 +20,9 @@ export const DataNum: DataFile[] = [
 ];
 
 export const AboutUs: DataFile[] = [
-    {title1: 'Our Vision', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.'},
-    {title1: 'Our Mission', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.'},
+    {title1: 'Our Vision', description: 'We aim to create a safer and more connected community by providing quick access to essential emergency and utility services.'},
+    {title1: 'Our Mission', description: 'Our mission is to ensure that every individual has immediate access to reliable emergency contacts, fostering a sense of security and preparedness in times of need.'},
 ];
-
-
 
 const API_URL = import.meta.env.VITE_WEATHER_API_URL
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY
