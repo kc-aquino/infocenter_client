@@ -7,12 +7,11 @@ import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
 function Home() {
   return (
     <>
-      <div className="flex flex-col lg:flex-row h-full p-10 gap-10">
-        <div className="flex flex-col w-full lg:w-3/4 gap-5">
+      <div className="flex flex-col 2xl:flex-row h-full md:p-10 md:gap-10">
+        <div className="flex flex-col w-full 2xl:w-3/4 md:gap-5">
           {/* Dashboard Header */}
           <div className="">
-            <div className="text-lg font-bold">Dashboard</div>
-            <div className="bg-no-repeat bg-cover bg-right-bottom bg-[url('/src/assets/registerBG.png')] h-[298px] w-full p-5 flex justify-end items-end rounded-xl">
+            <div className="bg-no-repeat bg-cover bg-right-bottom bg-[url('/src/assets/registerBG.png')] h-[298px] w-full p-5 flex justify-end items-end md:rounded-xl">
               <div className="flex flex-col text-white p-5 rounded-lg">
                 <h1 className="text-lg font-bold">Emergency Numbers</h1>
                 <h3>
@@ -24,7 +23,7 @@ function Home() {
           </div>
 
           {/* Emergency Numbers List */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2 md:gap-10 p-2">
             {DataNum.map((data, index) => (
               <EmergencyNumbers
                 key={index}
@@ -38,7 +37,7 @@ function Home() {
         </div>
 
         {/* About Us Section */}
-        <div className="flex flex-col justify-between w-full h-full lg:w-1/4 bg-[#FF6F00] rounded-xl pb-0 text-white overflow-hidden max-h-[calc(100%-3rem)] ">
+        <div className="flex flex-col justify-between w-full h-full 2xl:w-1/4 bg-[#FF6F00] md:rounded-xl pb-0 text-white">
           <div className="p-5 flex flex-col gap-5 overflow-y-auto max-h-[calc(100%-5rem)]">
             <h2 className="text-lg font-bold">About Us</h2>
 
@@ -60,12 +59,7 @@ function Home() {
             {/* SMS Alert Section */}
             <div className="pb-10 flex flex-col gap-5 justify-center items-center">
               <div className="p-5 bg-white rounded-lg text-center text-black">
-                <h1 className="text-md font-semibold">Receive an SMS Alert!</h1>
-                <img
-                  src="/src/assets/mail-check.png"
-                  alt="Mail Check"
-                  className="mx-auto mt-2"
-                />
+                <h1 className="text-md font-semibold text-[#FF6F00]">Receive an SMS Alert!</h1>
               </div>
             </div>
           </div>

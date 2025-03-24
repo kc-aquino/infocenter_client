@@ -24,12 +24,13 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData, day }) => {
   if (!weatherData) return <p>Loading...</p>;
 
   return (
-    <div className='w-full md:w-[280px] h-full bg-[#FF6F00] rounded-md p-4 text-[#FF6F00] flex flex-col gap-5 justify-between shadow-3xl'>
+    <div className='w-full md:w-[280px] h-full bg-gradient-to-b from-orange-500 to-blue-300 rounded-md p-4 text-[#FF6F00] flex flex-col gap-5 justify-between shadow-3xl'>
       <div className='grid grid-cols-3 gap-2'>
         <div className='bg-white font-bold rounded-xl p-2 flex justify-center items-center'>
           {day}
         </div>
       </div>
+      
       <div className='flex justify-center items-center px-20'>
         <div className='bg-white w-full rounded-lg flex justify-center h-full p-2'>
           {weatherIcons[weatherData.condition.text] || <Cloud size={50} color="#FF6F00" />}

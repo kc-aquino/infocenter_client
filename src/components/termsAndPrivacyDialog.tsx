@@ -16,12 +16,12 @@ const TermsAndPrivacyDialog = () => {
   return (
     <>
       {/* Trigger Links */}
-      <div className="p-4">
-        <Dialog>
+      <div className="p-4 flex justify-around">
+        <Dialog >
           <DialogTrigger asChild>
             <a
               href="#"
-              className="text-gray-500 underline cursor-pointer mr-4 text-sm"
+              className="text-gray-600 underline cursor-pointer mr-4 text-sm"
               onClick={e => {
                 e.preventDefault();
                 setModalType('terms');
@@ -34,7 +34,7 @@ const TermsAndPrivacyDialog = () => {
           <DialogTrigger asChild>
             <a
               href="#"
-              className="text-gray-500 underline cursor-pointer text-sm"
+              className="text-gray-600 underline cursor-pointer text-sm"
               onClick={e => {
                 e.preventDefault();
                 setModalType('privacy');
