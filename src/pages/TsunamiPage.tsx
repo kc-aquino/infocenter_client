@@ -24,7 +24,7 @@ const TsunamiPage = () => {
           advisoryName: tsunami.name,
           advisoryDescription: tsunami.description,
           advisoryStatus: tsunami.severity,
-          advisoryDate: new Date(tsunami.created_at).toLocaleString(), // Formatting date
+          advisoryDate: new Date(tsunami.date).toLocaleString(), // Formatting date
         }));
 
         setAdvisoryData(prev => ({

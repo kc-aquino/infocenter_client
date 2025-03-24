@@ -1,58 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Advisories } from '@/components/advisories';
+import { fetchData } from '@/lib/api';
 
 const TrafficPage = () => {
   const fbPageLink = 'https://www.facebook.com/profile.php?id=61558093977723';
-  const advisoryData = {
+  const [advisoryData, setAdvisoryData] = useState({
     title: 'Traffic Alerts',
     description: 'A record of traffic advisories along nearby locations',
     header: {
       type: 'traffic',
     },
-    advisories: [
-      {
-        advisoryName: 'Lightweight Traffic',
-        advisoryDescription:
-          'Lightweight traffic along M. Sioson St. due to active road construction along Merville. March 17 2025.',
-        advisoryStatus: 'Road Construction',
-        advisoryDate: 'March 20, 2025',
-      },
-      {
-        advisoryName: 'Heavy Traffic',
-        advisoryDescription:
-          'Heavy traffic along C4 Road due to a vehicular accident. Expect delays and use alternate routes.',
-        advisoryStatus: 'Vehicular Accident',
-        advisoryDate: 'March 19, 2025',
-      },
-      {
-        advisoryName: 'Road Closure',
-        advisoryDescription:
-          'A section of Main Street is closed for repairs. Please use detour routes to avoid delays.',
-        advisoryStatus: 'Road Construction',
-      },
-      {
-        advisoryName: 'Heavy Traffic',
-        advisoryDescription:
-          'Heavy traffic along C4 Road due to a vehicular accident. Expect delays and use alternate routes.',
-        advisoryStatus: 'Vehicular Accident',
-        advisoryDate: 'March 19, 2025',
-      },
-      {
-        advisoryName: 'Road Closure',
-        advisoryDescription:
-          'A section of Main Street is closed for repairs. Please use detour routes to avoid delays.',
-        advisoryStatus: 'Road Construction',
-      },
-      {
-        advisoryName: 'Heavy Traffic',
-        advisoryDescription:
-          'Heavy traffic along C4 Road due to a vehicular accident. Expect delays and use alternate routes.',
-        advisoryStatus: 'Vehicular Accident',
-        advisoryDate: 'March 19, 2025',
-      },
-    ],
-  };
+    advisories: [],
+  });
+
+  useEffect(() => {
+    const fetchTrafficData = async () => {
+      try {
+        const fetchedData = await fetchData('api/get-traffic');
+
+        // Transform fetched data to match AdvisoriesProps
+        const formattedAdvisories = fetchedData.map((traffic: any) => ({
+          advisoryName: traffic.name,
+          advisoryDescription: traffic.description,
+          advisoryStatus: traffic.severity,
+          advisoryDate: new Date(traffic.date).toLocaleString(),
+        }));
+
+        setAdvisoryData(prev => ({
+          ...prev,
+          advisories: formattedAdvisories,
+        }));
+
+        console.log('Formatted Traffic advisories:', formattedAdvisories);
+      } catch (error) {
+        console.error('Failed to fetch Traffic data:', error);
+      }
+    };
+
+    fetchTrafficData();
+  }, []);
 
   return (
     <div className="m-0 md:m-10 md:my-5 overflow-hidden">
