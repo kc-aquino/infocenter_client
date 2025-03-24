@@ -27,17 +27,17 @@ export const AboutUs: DataFile[] = [
 
 
 
-const API_URL = "http://api.weatherapi.com/v1/current.json";
-const API_KEY = "4630c665451a4d3584e25043252103";
-const LOCATION = "14.662,120.956";
-
+const API_URL = import.meta.env.VITE_WEATHER_API_URL
+const API_KEY = import.meta.env.VITE_WEATHER_API_KEY
+const LOCATION = import.meta.env.VITE_WEATHER_LOCATION || "manila";
+const DAYS = import.meta.env.VITE_WEATHER_DAYS ; // Fetch the full week
 
 export const fetchWeatherData = async () => {
   try {
-    const response = await axios.get(`${API_URL}?key=${API_KEY}&q=${LOCATION}`);
-    return response.data; 
+    const response = await axios.get(`${API_URL}?key=${API_KEY}&q=${LOCATION}&days=${DAYS}`);
+    return response.data;
   } catch (error) {
     console.error("Error fetching weather data:", error);
-    return null; 
+    return null;
   }
 };

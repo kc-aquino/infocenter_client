@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
@@ -169,25 +168,7 @@ export default function RegisterPage() {
               {'By clicking continue, you agree to our '}
               <br />
               <TermsAndPrivacyDialog />
-              <br />
-              {/* <Link
-                className="!underline !text-gray-500"
-                to="/terms-of-service"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Terms of Service
-              </Link>{' '}
-              and{' '}
-              <Link
-                className="!underline !text-gray-500"
-                to="/privacy-policy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Privacy Policy
-              </Link> */}
-              .
+              <br />.
             </p>
           </CardFooter>
         </Card>
