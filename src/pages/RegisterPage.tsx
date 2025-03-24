@@ -20,15 +20,22 @@ import brgLogo from '@/assets/brgylogotrns1.png';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
-
   const formSchema = z.object({
-    fullName: z.string().nonempty(),
-    middleName: z.string().nonempty(),
-    lastName: z.string().nonempty(),
-    contactNumber: z.string().nonempty(),
-    birthdate: z.string().nonempty(),
+    fullName: z.string().min(2).max(50),
+    middleName: z.string().min(2).max(50),
+    lastName: z.string().min(2).max(50),
+    contactNumber: z
+      .string()
+      .min(11, { message: 'Contact number must be at least 11 digits' })
+      .max(11, { message: 'Contact number must be at most 11 digits' }),
+    birthdate: z.string().refine(
+      date => {
+        const parsedDate = Date.parse(date);
+        return !isNaN(parsedDate);
+      },
+      { message: 'Invalid date format' },
+    ),
   });
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -78,7 +85,7 @@ export default function RegisterPage() {
                         <FormControl>
                           <Input
                             className="bg-white"
-                            placeholder="Novy"
+                            placeholder="Juan"
                             {...field}
                           />
                         </FormControl>
@@ -95,7 +102,7 @@ export default function RegisterPage() {
                         <FormControl>
                           <Input
                             className="bg-white"
-                            placeholder="Montenegro"
+                            placeholder="Santos"
                             {...field}
                           />
                         </FormControl>
