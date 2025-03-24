@@ -59,7 +59,7 @@ const LocationPage: React.FC<LocationPageProps> = ({
         <TabsContent value={activeTab}>
           <div className="flex flex-col md:flex-row gap-4 h-full">
             {/* Map Card */}
-            <div className="flex-1 bg-white/80 shadow-lg rounded-lg border border-orange-500">
+            <div className="flex-1 bg-white/80 shadow-lg rounded-lg border border-orange-500 z-50">
               <MapContainer
                 center={activeLocation.position}
                 zoom={15}
