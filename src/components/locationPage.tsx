@@ -11,8 +11,27 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 // Fix missing marker icons in Leaflet
 import markerIconPng from 'leaflet/dist/images/marker-icon.png';
 import markerShadowPng from 'leaflet/dist/images/marker-shadow.png';
+interface LocationPageProps {
+  locations: Record<
+    string,
+    {
+      name: string;
+      address: string;
+      description: string;
+      position: [number, number];
+      image: string;
+      location_link: string;
+    }
+  >;
+  defaultTab: string;
+  title: string;
+}
 
-const LocationPage = ({ locations, defaultTab, title }) => {
+const LocationPage: React.FC<LocationPageProps> = ({
+  locations,
+  defaultTab,
+  title,
+}) => {
   const [activeTab, setActiveTab] = useState(defaultTab);
   const activeLocation = locations[activeTab];
 
@@ -40,7 +59,7 @@ const LocationPage = ({ locations, defaultTab, title }) => {
         <TabsContent value={activeTab}>
           <div className="flex flex-col md:flex-row gap-4 h-full">
             {/* Map Card */}
-            <div className="flex-1 bg-white/80 shadow-lg rounded-lg border border-orange-500">
+            <div className="flex-1 bg-white/80 shadow-lg rounded-lg border border-orange-500 z-50">
               <MapContainer
                 center={activeLocation.position}
                 zoom={15}
@@ -90,7 +109,7 @@ const LocationPage = ({ locations, defaultTab, title }) => {
                   className="w-full"
                   variant="default"
                   onClick={() =>
-                    window.open(activeLocation.gmapLocation, '_blank')
+                    window.open(activeLocation.location_link, '_blank')
                   }
                 >
                   Go to Location

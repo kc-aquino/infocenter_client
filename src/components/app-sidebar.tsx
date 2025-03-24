@@ -44,9 +44,14 @@ const data = {
   ],
   navSecondary: [
     {
-      title: 'Shelter',
-      url: '/shelter',
-      icon: Warehouse,
+      title: 'Fire Alert',
+      url: '/fire',
+      icon: Flame,
+    },
+    {
+      title: 'First Aid',
+      url: '/first-aid',
+      icon: BriefcaseMedical,
     },
     {
       title: 'Flood',
@@ -54,29 +59,19 @@ const data = {
       icon: Droplets,
     },
     {
-      title: 'Pharmacy',
-      url: '/pharmacy',
-      icon: HeartPulse,
-    },
-    {
-      title: 'Tsunami',
-      url: '/tsunami',
-      icon: Waves,
-    },
-    {
       title: 'Garbage',
       url: '/garbage',
       icon: Trash2,
     },
     {
-      title: 'Fire Alert',
-      url: '/fire',
-      icon: Flame,
+      title: 'Pharmacy',
+      url: '/pharmacy',
+      icon: HeartPulse,
     },
     {
-      title: 'Weather',
-      url: '/weather',
-      icon: CloudSun,
+      title: 'Shelter',
+      url: '/shelter',
+      icon: Warehouse,
     },
     {
       title: 'Traffic',
@@ -84,14 +79,19 @@ const data = {
       icon: Car,
     },
     {
+      title: 'Tsunami',
+      url: '/tsunami',
+      icon: Waves,
+    },
+    {
       title: 'Utilities',
       url: '/utilities',
       icon: HousePlug,
     },
     {
-      title: 'First Aid',
-      url: '/first-aid',
-      icon: BriefcaseMedical,
+      title: 'Weather',
+      url: '/weather',
+      icon: CloudSun,
     },
   ],
 };

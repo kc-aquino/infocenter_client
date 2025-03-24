@@ -1,5 +1,5 @@
 import React from 'react';
-import LocationPage from '@/components/LocationPage';
+import LocationPage from '@/components/locationPage';
 import shelter1img from '@/assets/shelterPage/shelter1.png';
 import shelter2img from '@/assets/shelterPage/shelter2.png';
 

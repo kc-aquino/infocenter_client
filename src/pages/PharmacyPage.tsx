@@ -1,5 +1,5 @@
 import React from 'react';
-import LocationPage from '@/components/LocationPage';
+import LocationPage from '@/components/locationPage';
 import pharmacy1img from '@/assets/pharmacyPage/pharmacy1.jpg';
 import pharmacy2img from '@/assets/pharmacyPage/pharmacy2.jpg';
 
