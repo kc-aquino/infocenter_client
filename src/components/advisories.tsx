@@ -5,13 +5,7 @@ import {
   CardTitle,
   CardDescription,
 } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+import { Skeleton } from '@/components/ui/skeleton';
 
 type Header = {
   headerTitle?: string;
@@ -32,6 +26,7 @@ interface AdvisoriesProps {
   title: string;
   description: string;
   advisories: AdvisoryItem[];
+  isLoading?: boolean;
 }
 
 export function Advisories({
@@ -39,6 +34,7 @@ export function Advisories({
   description,
   advisories,
   header,
+  isLoading = false,
 }: AdvisoriesProps) {
   return (
     <div className="min-h-screen flex flex-col gap-4 p-4 sm:p-6">
@@ -104,62 +100,32 @@ export function Advisories({
         </CardHeader>
 
         <CardContent className="flex-1 overflow-y-auto space-y-2">
-          {advisories.map((advisory, index) => (
-            <div
-              key={index}
-              className={`p-4 rounded-lg flex justify-between items-start shadow-sm ${
-                index === 0 ? 'bg-orange-500 text-white' : 'bg-white'
-              }`}
-            >
-              <Accordion
-                type="single"
-                collapsible
-                className="w-full"
-                defaultValue={index === 0 ? `item-${index}` : ''}
-              >
-                <AccordionItem value={`item-${index}`}>
-                  <AccordionTrigger>
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full">
-                      <div className="flex items-center space-x-4">
-                        <Badge
-                          className={`text-xs ${
-                            index === 0
-                              ? 'bg-white text-orange-500'
-                              : 'bg-orange-500 text-white'
-                          }`}
-                        >
-                          {advisory.advisoryStatus}
-                        </Badge>
-                        <h3
-                          className={`font-semibold ${
-                            index === 0 ? 'text-white' : 'text-gray-900'
-                          }`}
-                        >
-                          {advisory.advisoryName}
-                        </h3>
-                      </div>
-                      <span
-                        className={`text-sm font-medium ${
-                          index === 0 ? 'text-white/80' : 'text-gray-500'
-                        }`}
-                      >
-                        {advisory.advisoryDate}
-                      </span>
+          {isLoading
+            ? // Show skeleton items while loading
+              Array.from({ length: 3 }).map((_, index) => (
+                <div key={index} className="p-4 rounded-lg bg-white shadow-sm">
+                  <div className="flex justify-between items-start">
+                    <div className="flex items-center space-x-4">
+                      <Skeleton className="h-6 w-16 rounded-full" />
+                      <Skeleton className="h-5 w-48" />
                     </div>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <p
-                      className={`text-sm ${
-                        index === 0 ? 'text-white/90' : 'text-gray-600'
-                      }`}
-                    >
-                      {advisory.advisoryDescription}
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </div>
-          ))}
+                    <Skeleton className="h-4 w-24" />
+                  </div>
+                  <Skeleton className="h-4 w-full mt-3" />
+                  <Skeleton className="h-4 w-3/4 mt-2" />
+                </div>
+              ))
+            : // Show actual advisories when loaded
+              advisories.map((advisory, index) => (
+                <div
+                  key={index}
+                  className={`p-4 rounded-lg flex justify-between items-start shadow-sm ${
+                    index === 0 ? 'bg-orange-500 text-white' : 'bg-white'
+                  }`}
+                >
+                  {/* Your existing advisory item rendering */}
+                </div>
+              ))}
         </CardContent>
       </Card>
     </div>

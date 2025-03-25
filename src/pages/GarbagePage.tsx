@@ -3,6 +3,7 @@ import { Advisories } from '../components/advisories';
 import { fetchData } from '@/lib/api';
 
 const GarbagePage = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [advisoryData, setAdvisoryData] = useState({
     title: 'Garbage Alerts',
     description:
@@ -15,6 +16,7 @@ const GarbagePage = () => {
 
   useEffect(() => {
     const fetchGarbageData = async () => {
+      setIsLoading(true);
       try {
         const fetchedData = await fetchData('api/get-garbage-collection');
 
@@ -51,6 +53,21 @@ const GarbagePage = () => {
         console.log('Formatted Garbage advisories:', formattedAdvisories);
       } catch (error) {
         console.error('Failed to fetch Garbage data:', error);
+
+        setAdvisoryData(prev => ({
+          ...prev,
+          advisories: [
+            {
+              advisoryName: 'Failed to Load Data',
+              advisoryDescription:
+                'Unable to retrieve garbage collection advisories. Please check your connection or try again later.',
+              advisoryStatus: 'Unavailable',
+              advisoryDate: new Date().toLocaleString(),
+            },
+          ],
+        }));
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -59,7 +76,7 @@ const GarbagePage = () => {
 
   return (
     <div className="m-0 md:m-10 md:my-5 overflow-hidden">
-      <Advisories {...advisoryData} />
+      <Advisories {...advisoryData} isLoading={isLoading} />
     </div>
   );
 };

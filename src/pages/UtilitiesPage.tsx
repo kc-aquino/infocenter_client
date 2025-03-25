@@ -4,6 +4,7 @@ import Utilities from '../assets/Utilities.png';
 import { fetchData } from '@/lib/api';
 
 const UtilitiesPage = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [advisoryData, setAdvisoryData] = useState({
     title: 'Utility Alerts',
     description:
@@ -16,6 +17,7 @@ const UtilitiesPage = () => {
 
   useEffect(() => {
     const fetchUtilitiesData = async () => {
+      setIsLoading(true);
       try {
         const fetchedData = await fetchData('api/get-utility');
         const formattedAdvisories =
@@ -40,10 +42,23 @@ const UtilitiesPage = () => {
           ...prev,
           advisories: formattedAdvisories,
         }));
-
-        // console.log('Formatted Traffic advisories:', formattedAdvisories);
       } catch (error) {
         console.error('Failed to fetch Traffic data:', error);
+
+        setAdvisoryData(prev => ({
+          ...prev,
+          advisories: [
+            {
+              advisoryName: 'Failed to Load Data',
+              advisoryDescription:
+                'Unable to retrieve garbage collection advisories. Please check your connection or try again later.',
+              advisoryStatus: 'Unavailable',
+              advisoryDate: new Date().toLocaleString(),
+            },
+          ],
+        }));
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -52,7 +67,7 @@ const UtilitiesPage = () => {
 
   return (
     <div className="m-0 md:m-10 md:my-5  overflow-hidden">
-      <Advisories {...advisoryData} />
+      <Advisories {...advisoryData} isLoading={isLoading} />
     </div>
   );
 };

@@ -13,9 +13,11 @@ const FirePage = () => {
     },
     advisories: [],
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchFireData = async () => {
+      setIsLoading(true);
       try {
         const fetchedData = await fetchData('api/get-fire');
         const formattedAdvisories =
@@ -40,10 +42,22 @@ const FirePage = () => {
           ...prev,
           advisories: formattedAdvisories,
         }));
-
-        console.log('Formatted Fire advisories:', formattedAdvisories);
       } catch (error) {
         console.error('Failed to fetch Fire data:', error);
+        setAdvisoryData(prev => ({
+          ...prev,
+          advisories: [
+            {
+              advisoryName: 'Failed to Load Data',
+              advisoryDescription:
+                'Unable to retrieve fire collection advisories. Please check your connection or try again later.',
+              advisoryStatus: 'Unavailable',
+              advisoryDate: new Date().toLocaleString(),
+            },
+          ],
+        }));
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -51,8 +65,8 @@ const FirePage = () => {
   }, []);
 
   return (
-    <div className="m-0 md:m-10 md:my-5  overflow-hidden">
-      <Advisories {...advisoryData} />
+    <div className="m-0 md:m-10 md:my-5 overflow-hidden">
+      <Advisories {...advisoryData} isLoading={isLoading} />
     </div>
   );
 };

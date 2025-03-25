@@ -5,6 +5,7 @@ import { fetchData } from '@/lib/api';
 
 const TrafficPage = () => {
   const fbPageLink = 'https://www.facebook.com/profile.php?id=61558093977723';
+  const [isLoading, setIsLoading] = useState(true);
   const [advisoryData, setAdvisoryData] = useState({
     title: 'Traffic Alerts',
     description: 'A record of traffic advisories along nearby locations',
@@ -16,16 +17,28 @@ const TrafficPage = () => {
 
   useEffect(() => {
     const fetchTrafficData = async () => {
+      setIsLoading(true);
       try {
         const fetchedData = await fetchData('api/get-traffic');
 
         // Transform fetched data to match AdvisoriesProps
-        const formattedAdvisories = fetchedData.map((traffic: any) => ({
-          advisoryName: traffic.name,
-          advisoryDescription: traffic.description,
-          advisoryStatus: traffic.severity,
-          advisoryDate: new Date(traffic.date).toLocaleString(),
-        }));
+        const formattedAdvisories =
+          fetchedData.length > 0
+            ? fetchedData.map((traffic: any) => ({
+                advisoryName: traffic.name,
+                advisoryDescription: traffic.description,
+                advisoryStatus: traffic.severity,
+                advisoryDate: new Date(traffic.date).toLocaleString(),
+              }))
+            : [
+                {
+                  advisoryName: 'No Current Traffic Advisories',
+                  advisoryDescription:
+                    'There are no traffic advisories at the moment. Stay safe and check back later.',
+                  advisoryStatus: 'None',
+                  advisoryDate: new Date().toLocaleString(),
+                },
+              ];
 
         setAdvisoryData(prev => ({
           ...prev,
@@ -35,6 +48,20 @@ const TrafficPage = () => {
         console.log('Formatted Traffic advisories:', formattedAdvisories);
       } catch (error) {
         console.error('Failed to fetch Traffic data:', error);
+        setAdvisoryData(prev => ({
+          ...prev,
+          advisories: [
+            {
+              advisoryName: 'Failed to Load Data',
+              advisoryDescription:
+                'Unable to retrieve garbage collection advisories. Please check your connection or try again later.',
+              advisoryStatus: 'Unavailable',
+              advisoryDate: new Date().toLocaleString(),
+            },
+          ],
+        }));
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -67,7 +94,7 @@ const TrafficPage = () => {
         </div>
       </div>
 
-      <Advisories {...advisoryData} />
+      <Advisories {...advisoryData} isLoading={isLoading} />
     </div>
   );
 };
