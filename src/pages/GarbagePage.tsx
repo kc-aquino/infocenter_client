@@ -22,17 +22,26 @@ const GarbagePage = () => {
           console.error('Unexpected API response format:', fetchedData);
           return;
         }
-
-        // Transform fetched data to match AdvisoriesProps
-        const formattedAdvisories = fetchedData.map(garbage => ({
-          advisoryName: garbage.name || 'No name provided',
-          advisoryDescription:
-            garbage.description || 'No description available',
-          advisoryStatus: garbage.status || 'Unknown',
-          advisoryDate: garbage.time
-            ? new Date(garbage.time).toLocaleString()
-            : 'No date provided',
-        }));
+        const formattedAdvisories =
+          fetchedData.length > 0
+            ? fetchedData.map(garbage => ({
+                advisoryName: garbage.name || 'No name provided',
+                advisoryDescription:
+                  garbage.description || 'No description available',
+                advisoryStatus: garbage.status || 'Unknown',
+                advisoryDate: garbage.time
+                  ? new Date(garbage.time).toLocaleString()
+                  : 'No date provided',
+              }))
+            : [
+                {
+                  advisoryName: 'No Current Garbage Collection Advisories',
+                  advisoryDescription:
+                    'There are no garbage collection advisories at the moment. Stay safe and check back later.',
+                  advisoryStatus: 'None',
+                  advisoryDate: new Date().toLocaleString(),
+                },
+              ];
 
         setAdvisoryData(prev => ({
           ...prev,

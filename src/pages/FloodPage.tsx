@@ -18,14 +18,23 @@ const FloodPage = () => {
     const fetchFloodData = async () => {
       try {
         const fetchedData = await fetchData('api/get-floods');
-
-        // Transform fetched data to match AdvisoriesProps
-        const formattedAdvisories = fetchedData.map((flood: any) => ({
-          advisoryName: flood.name,
-          advisoryDescription: flood.description,
-          advisoryStatus: flood.severity,
-          advisoryDate: new Date(flood.date).toLocaleString(), // Formatting date
-        }));
+        const formattedAdvisories =
+          fetchedData.length > 0
+            ? fetchedData.map((flood: any) => ({
+                advisoryName: flood.name,
+                advisoryDescription: flood.description,
+                advisoryStatus: flood.severity,
+                advisoryDate: new Date(flood.date).toLocaleString(),
+              }))
+            : [
+                {
+                  advisoryName: 'No Current Flood Advisories',
+                  advisoryDescription:
+                    'There are no flood advisories at the moment. Stay safe and check back later.',
+                  advisoryStatus: 'None',
+                  advisoryDate: new Date().toLocaleString(),
+                },
+              ];
 
         setAdvisoryData(prev => ({
           ...prev,

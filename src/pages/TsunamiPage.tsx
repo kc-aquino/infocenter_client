@@ -18,14 +18,23 @@ const TsunamiPage = () => {
     const fetchTsunamiData = async () => {
       try {
         const fetchedData = await fetchData('api/get-tsunamis');
-
-        // Transform fetched data to match AdvisoriesProps
-        const formattedAdvisories = fetchedData.map((tsunami: any) => ({
-          advisoryName: tsunami.name,
-          advisoryDescription: tsunami.description,
-          advisoryStatus: tsunami.severity,
-          advisoryDate: new Date(tsunami.date).toLocaleString(), // Formatting date
-        }));
+        const formattedAdvisories =
+          fetchedData.length > 0
+            ? fetchedData.map((tsunami: any) => ({
+                advisoryName: tsunami.name,
+                advisoryDescription: tsunami.description,
+                advisoryStatus: tsunami.severity,
+                advisoryDate: new Date(tsunami.date).toLocaleString(),
+              }))
+            : [
+                {
+                  advisoryName: 'No Current Tsunami Advisories',
+                  advisoryDescription:
+                    'There are no tsunami advisories at the moment. Stay safe and check back later.',
+                  advisoryStatus: 'None',
+                  advisoryDate: new Date().toLocaleString(),
+                },
+              ];
 
         setAdvisoryData(prev => ({
           ...prev,

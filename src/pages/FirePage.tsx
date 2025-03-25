@@ -18,14 +18,23 @@ const FirePage = () => {
     const fetchFireData = async () => {
       try {
         const fetchedData = await fetchData('api/get-fire');
-
-        // Transform fetched data to match AdvisoriesProps
-        const formattedAdvisories = fetchedData.map((fire: any) => ({
-          advisoryName: fire.name,
-          advisoryDescription: fire.description,
-          advisoryStatus: fire.severity,
-          advisoryDate: new Date(fire.date).toLocaleString(),
-        }));
+        const formattedAdvisories =
+          fetchedData.length > 0
+            ? fetchedData.map((fire: any) => ({
+                advisoryName: fire.name,
+                advisoryDescription: fire.description,
+                advisoryStatus: fire.severity,
+                advisoryDate: new Date(fire.date).toLocaleString(),
+              }))
+            : [
+                {
+                  advisoryName: 'No Current Fire Advisories',
+                  advisoryDescription:
+                    'There are no fire advisories at the moment. Stay safe and check back later.',
+                  advisoryStatus: 'None',
+                  advisoryDate: new Date().toLocaleString(),
+                },
+              ];
 
         setAdvisoryData(prev => ({
           ...prev,

@@ -18,13 +18,23 @@ const UtilitiesPage = () => {
     const fetchUtilitiesData = async () => {
       try {
         const fetchedData = await fetchData('api/get-utility');
-
-        const formattedAdvisories = fetchedData.map((utility: any) => ({
-          advisoryName: utility.name,
-          advisoryDescription: utility.description,
-          advisoryStatus: utility.status,
-          advisoryDate: new Date(utility.date).toLocaleString(),
-        }));
+        const formattedAdvisories =
+          fetchedData.length > 0
+            ? fetchedData.map((utility: any) => ({
+                advisoryName: utility.name,
+                advisoryDescription: utility.description,
+                advisoryStatus: utility.status,
+                advisoryDate: new Date(utility.date).toLocaleString(),
+              }))
+            : [
+                {
+                  advisoryName: 'No Current Utility Advisories',
+                  advisoryDescription:
+                    'There are no utility advisories at the moment. Stay safe and check back later.',
+                  advisoryStatus: 'None',
+                  advisoryDate: new Date().toLocaleString(),
+                },
+              ];
 
         setAdvisoryData(prev => ({
           ...prev,
