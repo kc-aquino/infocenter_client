@@ -59,7 +59,7 @@ const WeatherPage = () => {
 
       <div className='flex flex-col pt-7 w-full'>
         <h1 className='text-xl font-semibold text-[#FF6F00]'>Weekly Forecast</h1>
-        <WeatherChart></WeatherChart>
+        <WeatherChart weatherData={weather?.forecast?.forecastday || []} />
         <div className='grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-5 mt-2 w-full p-5'>
           {weather?.forecast?.forecastday?.slice(1).map((dayData: any, index: number) => (
             <WeatherCard key={index} weatherData={dayData.day} day={weekDays[index + 1]} />

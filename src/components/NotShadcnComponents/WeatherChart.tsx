@@ -1,7 +1,6 @@
-"use client"
-
-import { TrendingUp } from "lucide-react"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import React from "react";
+import { TrendingUp } from "lucide-react";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
   Card,
@@ -10,84 +9,83 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
-  ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-]
+} from "@/components/ui/chart";
+
+// Define props for WeatherChart
+interface WeatherChartProps {
+  weatherData: any[];
+}
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
+  temp: {
+    label: "Avg Temperature (°C)",
+    color: "#FF6F00", // Orange
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
-export function WeatherChart() {
+const WeatherChart: React.FC<WeatherChartProps> = ({ weatherData }) => {
+  if (!Array.isArray(weatherData) || weatherData.length === 0) {
+    return <p className="text-center text-red-500">No data available</p>;
+  }
+
+  // Map weather forecast data to a format suitable for Recharts
+  const chartData = weatherData.map((day) => ({
+    date: new Date(day.date).toLocaleDateString("en-US", { weekday: "short" }),
+    temp: day.day?.avgtemp_c || 0, // Ensure valid temperature data
+  }));
+
+  // Get the last day's data to display in a "fixed tooltip"
+  const latestData = chartData[chartData.length - 7];
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Area Chart</CardTitle>
-        <CardDescription>
-          Showing total visitors for the last 6 months
-        </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="relative">
         <ChartContainer config={chartConfig}>
           <AreaChart
-            accessibilityLayer
             data={chartData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
+            margin={{ left: 12, right: 12, top: 10, bottom: 10 }}
+            width={500}
+            height={250}
           >
-            <CartesianGrid vertical={false} />
+            <CartesianGrid vertical={false} strokeDasharray="3 3" />
             <XAxis
-              dataKey="month"
+              dataKey="date"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
+              stroke="#FF6F00"
             />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
-            />
+            <YAxis domain={["auto", "auto"]} tickMargin={8} stroke="#FF6F00" />
             <Area
-              dataKey="desktop"
-              type="natural"
-              fill="var(--color-desktop)"
-              fillOpacity={0.4}
-              stroke="var(--color-desktop)"
+              dataKey="temp"
+              type="monotone"
+              fill="#FF6F00"
+              fillOpacity={0.6}
+              stroke="#FF6F00"
+              strokeWidth={3}
+              dot={{ fill: "#FF6F00", r: 5 }} // Show points
             />
           </AreaChart>
         </ChartContainer>
+
+        {/* Fixed "Tooltip" showing latest data */}
+        <div className="absolute top-4 right-4 bg-white shadow-lg rounded-md p-2 text-sm font-medium border border-gray-300">
+          <p className="text-gray-500">Latest Data</p>
+          <p className="text-[#FF6F00] text-lg">{latestData.temp}°C</p>
+          <p className="text-gray-600">{latestData.date}</p>
+        </div>
       </CardContent>
       <CardFooter>
-        <div className="flex w-full items-start gap-2 text-sm">
-          <div className="grid gap-2">
-            <div className="flex items-center gap-2 font-medium leading-none">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-            </div>
-            <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              January - June 2024
-            </div>
-          </div>
-        </div>
       </CardFooter>
     </Card>
-  )
-}
+  );
+};
 
 export default WeatherChart;
