@@ -1,5 +1,5 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useState } from "react";
 
 interface EmergencyNumbersProps {
   title: string;
@@ -8,9 +8,12 @@ interface EmergencyNumbersProps {
   logo?: React.ElementType;
 }
 
-const EmergencyNumbers: React.FC<EmergencyNumbersProps> = ({ title, Landline, Mobile, logo: Logo }) => {
-  const navigate = useNavigate();
-
+const EmergencyNumbers: React.FC<EmergencyNumbersProps> = ({
+  title,
+  Landline,
+  Mobile,
+  logo: Logo,
+}) => {
   // Function to copy a number to clipboard
   const copyToClipboard = (number: string) => {
     navigator.clipboard.writeText(number).then(() => {
@@ -18,19 +21,32 @@ const EmergencyNumbers: React.FC<EmergencyNumbersProps> = ({ title, Landline, Mo
     });
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+  
+
   return (
-    <div className="flex flex-col bg-white w-full rounded-lg shadow-md drop-shadow-2xl text-white">
-      <div className="bg-[#FF6F00] w-full h-[60px] rounded-lg drop-shadow-lg flex items-center justify-between text-lg font-bold p-5">
+    <div className="flex flex-col bg-white w-full md:rounded-lg shadow-md drop-shadow-2xl text-white">
+      {/* Header */}
+      <div
+        className="bg-[#FF6F00] w-full h-[60px] rounded-lg drop-shadow-lg flex items-center justify-between text-lg font-bold p-5 cursor-pointer hover:bg-gradient-to-b from-orange-500 to-blue-300"
+        onClick={() => setIsOpen(!isOpen)}
+      >
         {title} {Logo && <Logo className="w-8 h-8 text-white" />}
       </div>
-      <div className="flex flex-col gap-2 p-3">
-
-        {/* Landline Section */}
-        <div className="text-sm text-gray-400 font-semibold">Landline:</div>
-        <div className="text-sm text-gray-700 font-bold flex flex-col gap-1 pl-5">
+      {/* Content */}
+      <div
+        className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-96 md:max-h-0" : "max-h-0 md:max-h-96 "}`}
+      >
+        <div className="flex flex-col gap-2 p-3">
+          {/* Landline Section */}
+          <div className="text-sm text-gray-400 font-semibold">Landline:</div>
+          <div className="text-sm text-gray-700 font-bold flex flex-col gap-1 pl-5">
           {Landline && Array.isArray(Landline) ? (
             Landline.map((num, index) => (
-              <div key={index} className="flex justify-between items-center pl-2">
+              <div
+                key={index}
+                className="flex justify-between items-center pl-2"
+              >
                 <span>{num}</span>
                 <a
                   href="#"
@@ -62,7 +78,10 @@ const EmergencyNumbers: React.FC<EmergencyNumbersProps> = ({ title, Landline, Mo
         <div className="text-sm text-gray-700 font-bold flex flex-col gap-1 pl-5">
           {Mobile && Array.isArray(Mobile) ? (
             Mobile.map((num, index) => (
-              <div key={index} className="flex justify-between items-center pl-2">
+              <div
+                key={index}
+                className="flex justify-between items-center pl-2"
+              >
                 <span>{num}</span>
                 <a
                   href="#"
@@ -88,9 +107,10 @@ const EmergencyNumbers: React.FC<EmergencyNumbersProps> = ({ title, Landline, Mo
             </div>
           )}
         </div>
-
       </div>
+        </div>
     </div>
+    
   );
 };
 

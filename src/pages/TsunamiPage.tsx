@@ -4,6 +4,7 @@ import Tsunami from '../assets/Tsunami.png';
 import { fetchData } from '@/lib/api';
 
 const TsunamiPage = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [advisoryData, setAdvisoryData] = useState({
     title: 'Tsunami Alerts',
     description:
@@ -16,16 +17,26 @@ const TsunamiPage = () => {
 
   useEffect(() => {
     const fetchTsunamiData = async () => {
+      setIsLoading(true);
       try {
         const fetchedData = await fetchData('api/get-tsunamis');
-
-        // Transform fetched data to match AdvisoriesProps
-        const formattedAdvisories = fetchedData.map((tsunami: any) => ({
-          advisoryName: tsunami.name,
-          advisoryDescription: tsunami.description,
-          advisoryStatus: tsunami.severity,
-          advisoryDate: new Date(tsunami.created_at).toLocaleString(), // Formatting date
-        }));
+        const formattedAdvisories =
+          fetchedData.length > 0
+            ? fetchedData.map((tsunami: any) => ({
+                advisoryName: tsunami.name,
+                advisoryDescription: tsunami.description,
+                advisoryStatus: tsunami.severity,
+                advisoryDate: new Date(tsunami.date).toLocaleString(),
+              }))
+            : [
+                {
+                  advisoryName: 'No Current Tsunami Advisories',
+                  advisoryDescription:
+                    'There are no tsunami advisories at the moment. Stay safe and check back later.',
+                  advisoryStatus: 'None',
+                  advisoryDate: new Date().toLocaleString(),
+                },
+              ];
 
         setAdvisoryData(prev => ({
           ...prev,
@@ -35,6 +46,21 @@ const TsunamiPage = () => {
         console.log('Formatted tsunami advisories:', formattedAdvisories);
       } catch (error) {
         console.error('Failed to fetch tsunami data:', error);
+
+        setAdvisoryData(prev => ({
+          ...prev,
+          advisories: [
+            {
+              advisoryName: 'Failed to Load Data',
+              advisoryDescription:
+                'Unable to retrieve garbage collection advisories. Please check your connection or try again later.',
+              advisoryStatus: 'Unavailable',
+              advisoryDate: new Date().toLocaleString(),
+            },
+          ],
+        }));
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -43,7 +69,7 @@ const TsunamiPage = () => {
 
   return (
     <div className="m-0 md:m-10 md:my-5  overflow-hidden">
-      <Advisories {...advisoryData} />
+      <Advisories {...advisoryData} isLoading={isLoading} />
     </div>
   );
 };

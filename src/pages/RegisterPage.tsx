@@ -1,10 +1,13 @@
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import axios from 'axios';
+import { fetchData } from '@/lib/api';
+import { useState } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import {
   Form,
   FormControl,
@@ -13,36 +16,63 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-
 import TermsAndPrivacyDialog from '@/components/termsAndPrivacyDialog';
 import bgImage from '@/assets/registerBG.png';
 import brgLogo from '@/assets/brgylogotrns1.png';
 
+const formSchema = z.object({
+  firstName: z.string().min(2, 'First Name is required').max(50),
+  middleName: z.string().optional(),
+  lastName: z.string().min(2, 'Last Name is required').max(50),
+  contactNumber: z
+    .string()
+    .min(9, 'Invalid contact number')
+    .max(10, 'Invalid contact number')
+    .regex(/^\d+$/, 'Must be a valid number'),
+  email: z.string().email('Must be a valid email address'),
+});
+
 export default function RegisterPage() {
   const navigate = useNavigate();
-
-  const formSchema = z.object({
-    fullName: z.string().nonempty(),
-    middleName: z.string().nonempty(),
-    lastName: z.string().nonempty(),
-    contactNumber: z.string().nonempty(),
-    birthdate: z.string().nonempty(),
-  });
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fullName: '',
+      firstName: '',
       middleName: '',
       lastName: '',
       contactNumber: '',
-      birthdate: '',
+      email: '',
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    navigate('/');
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      setLoading(true);
+
+      let contactNumber = values.contactNumber.replace(/\D/g, '');
+      if (contactNumber.startsWith('63'))
+        contactNumber = contactNumber.slice(2);
+      if (contactNumber.length === 9) contactNumber = '9' + contactNumber;
+
+      const response = await fetchData('api/register-sms', 'POST', {
+        FirstName: values.firstName,
+        MiddleName: values.middleName || null,
+        LastName: values.lastName,
+        ContactNumber: contactNumber,
+        email: values.email,
+      });
+
+      console.log('Registration Response:', response);
+      alert('Registration successful!');
+      navigate('/');
+    } catch (error) {
+      console.error('Registration Error:', error);
+      alert('Failed to register. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -50,11 +80,10 @@ export default function RegisterPage() {
       className="min-h-screen flex items-center justify-center bg-gray-100 bg-opacity-50 relative bg-no-repeat bg-cover"
       style={{ backgroundImage: `url(${bgImage})` }}
     >
-      {/* Content Container */}
       <div className="z-10 w-full max-w-4xl px-4 flex flex-1 justify-center">
         <Card className="w-full bg-white/80 shadow-lg rounded-lg max-h-screen md:max-h-[90vh] overflow-y-auto">
           <div className="flex flex-col items-center p-6">
-            <img src={brgLogo} alt="Logo" className="w-24 h-24 mb-4" />
+            <img src={brgLogo} alt="Barangay Logo" className="w-24 h-24 mb-4" />
             <h2 className="text-xl md:text-2xl font-semibold text-center text-[#FF6F00]">
               Barangay Dampalit InfoCenter
             </h2>
@@ -67,62 +96,41 @@ export default function RegisterPage() {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-6"
               >
-                {/* First Row: Full Name, Middle Name, Last Name */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="fullName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Full Name</FormLabel>
-                        <FormControl>
-                          <Input
-                            className="bg-white"
-                            placeholder="Novy"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="middleName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Middle Name</FormLabel>
-                        <FormControl>
-                          <Input
-                            className="bg-white"
-                            placeholder="Montenegro"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="lastName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Last Name</FormLabel>
-                        <FormControl>
-                          <Input
-                            className="bg-white"
-                            placeholder="Dela Cruz"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  {['firstName', 'middleName', 'lastName'].map(field => (
+                    <FormField
+                      key={field}
+                      control={form.control}
+                      name={field as keyof typeof form.defaultValues}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>
+                            {field.name === 'firstName'
+                              ? 'First Name'
+                              : field.name === 'middleName'
+                              ? 'Middle Name'
+                              : 'Last Name'}
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              className="bg-white"
+                              {...field}
+                              placeholder={
+                                field.name === 'firstName'
+                                  ? 'Enter your first name'
+                                  : field.name === 'middleName'
+                                  ? 'Enter your middle name (optional)'
+                                  : 'Enter your last name'
+                              }
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  ))}
                 </div>
 
-                {/* Second Row: Contact Number, Birthdate */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FormField
                     control={form.control}
@@ -133,22 +141,36 @@ export default function RegisterPage() {
                         <FormControl>
                           <Input
                             className="bg-white"
-                            placeholder="09XXXXXXXXX"
                             {...field}
+                            placeholder="+639XXXXXXXXX"
+                            value={`+639${field.value}`}
+                            onChange={e => {
+                              const inputValue = e.target.value
+                                .replace(/^\+639/, '')
+                                .replace(/\D/g, '')
+                                .slice(0, 9);
+                              field.onChange(inputValue);
+                            }}
                           />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
+
                   <FormField
                     control={form.control}
-                    name="birthdate"
+                    name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Birthdate</FormLabel>
+                        <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input type="date" className="bg-white" {...field} />
+                          <Input
+                            className="bg-white"
+                            type="email"
+                            {...field}
+                            placeholder="example@email.com"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -156,20 +178,19 @@ export default function RegisterPage() {
                   />
                 </div>
 
-                <Button type="submit" className="w-full">
-                  Register
+                <Button type="submit" className="w-full" disabled={loading}>
+                  {loading ? 'Registering...' : 'Register'}
                 </Button>
               </form>
             </Form>
           </CardContent>
 
           <CardFooter className="flex justify-center items-center text-center text-muted-foreground p-6">
-            <p className="text-sm">
-              {'By clicking continue, you agree to our '}
-              <br />
+            <div className="text-sm text-center">
+              <p>By clicking continue, you agree to our</p>
               <TermsAndPrivacyDialog />
-              <br />.
-            </p>
+              <p>.</p>
+            </div>
           </CardFooter>
         </Card>
       </div>

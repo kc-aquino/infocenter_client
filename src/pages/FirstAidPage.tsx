@@ -1,10 +1,5 @@
 import React from 'react';
 import { FirstAid } from '../components/first-aid';
-import RatDance from '../assets/TestVideos/ratdance.mp4'
-import TestVideo1 from '../assets/TestVideos/TestVideo1.mp4'
-import TestVideo2 from '../assets/TestVideos/TestVideo2.mp4'
-import TestVideo3 from '../assets/TestVideos/TestVideo3.mp4'
-import TestVideo4 from '../assets/TestVideos/TestVideo4.mp4'
 
 const FirstAidPage = () => {
     const data = [
@@ -13,39 +8,39 @@ const FirstAidPage = () => {
             description: 'Sample first aid description.',
             firstAidItems: [
                 {
-                    itemTitle: 'First Aid Item 1',
-                    itemDescription: 'Sample first aid item 1 description.',
-                    itemLink: TestVideo3
+                    itemTitle: 'First Aid for Training',
+                    itemDescription: 'How to help someone choking.',
+                    itemLink: 'https://www.youtube.com/watch?v=ea1RJUOiNfQ'
                 },
                 {
-                    itemTitle: 'First Aid Item 2',
-                    itemDescription: 'Sample first aid item 2 description.',
-                    itemLink: RatDance
+                    itemTitle: 'How to do CPR on an Adult',
+                    itemDescription: 'Learn how to perform CPR.',
+                    itemLink: 'https://www.youtube.com/watch?v=BQNNOh8c8ks'
                 },
                 {
-                    itemTitle: 'First Aid Item 3',
-                    itemDescription: 'Sample first aid item 3 description.',
-                    itemLink: TestVideo1
+                    itemTitle: 'Treating Burns',
+                    itemDescription: 'Steps to treat burns safely.',
+                    itemLink: 'https://www.youtube.com/watch?v=XGnLkUty69g'
                 },
                 {
-                    itemTitle: 'First Aid Item 4',
-                    itemDescription: 'Sample first aid item 4 description.',
-                    itemLink: TestVideo2
+                    itemTitle: 'First Aid for Bleeding',
+                    itemDescription: 'How to stop bleeding effectively.',
+                    itemLink: 'https://www.youtube.com/watch?v=NxO5LvgqZe0'
                 },
                 {
-                    itemTitle: 'First Aid Item 5',
-                    itemDescription: 'Sample first aid item 5 description.',
-                    itemLink: TestVideo4
+                    itemTitle: 'Stroke First Aid',
+                    itemDescription: 'Recognizing and helping stroke victims.',
+                    itemLink: 'https://www.youtube.com/watch?v=EYUDS3wVWEk'
                 }
             ]
         }
-    ]
+    ];
 
     return (
-        <div className='m-0 md:m-10 md:my-5  overflow-hidden'>
-            <FirstAid {...data[0]}/>
+        <div className='m-0 md:m-10 md:my-5 overflow-hidden'>
+            <FirstAid {...data[0]} />
         </div>
-  );
+    );
 };
 
 export default FirstAidPage;

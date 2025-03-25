@@ -1,58 +1,72 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Advisories } from '@/components/advisories';
+import { fetchData } from '@/lib/api';
 
 const TrafficPage = () => {
   const fbPageLink = 'https://www.facebook.com/profile.php?id=61558093977723';
-  const advisoryData = {
+  const [isLoading, setIsLoading] = useState(true);
+  const [advisoryData, setAdvisoryData] = useState({
     title: 'Traffic Alerts',
     description: 'A record of traffic advisories along nearby locations',
     header: {
       type: 'traffic',
     },
-    advisories: [
-      {
-        advisoryName: 'Lightweight Traffic',
-        advisoryDescription:
-          'Lightweight traffic along M. Sioson St. due to active road construction along Merville. March 17 2025.',
-        advisoryStatus: 'Road Construction',
-        advisoryDate: 'March 20, 2025',
-      },
-      {
-        advisoryName: 'Heavy Traffic',
-        advisoryDescription:
-          'Heavy traffic along C4 Road due to a vehicular accident. Expect delays and use alternate routes.',
-        advisoryStatus: 'Vehicular Accident',
-        advisoryDate: 'March 19, 2025',
-      },
-      {
-        advisoryName: 'Road Closure',
-        advisoryDescription:
-          'A section of Main Street is closed for repairs. Please use detour routes to avoid delays.',
-        advisoryStatus: 'Road Construction',
-      },
-      {
-        advisoryName: 'Heavy Traffic',
-        advisoryDescription:
-          'Heavy traffic along C4 Road due to a vehicular accident. Expect delays and use alternate routes.',
-        advisoryStatus: 'Vehicular Accident',
-        advisoryDate: 'March 19, 2025',
-      },
-      {
-        advisoryName: 'Road Closure',
-        advisoryDescription:
-          'A section of Main Street is closed for repairs. Please use detour routes to avoid delays.',
-        advisoryStatus: 'Road Construction',
-      },
-      {
-        advisoryName: 'Heavy Traffic',
-        advisoryDescription:
-          'Heavy traffic along C4 Road due to a vehicular accident. Expect delays and use alternate routes.',
-        advisoryStatus: 'Vehicular Accident',
-        advisoryDate: 'March 19, 2025',
-      },
-    ],
-  };
+    advisories: [],
+  });
+
+  useEffect(() => {
+    const fetchTrafficData = async () => {
+      setIsLoading(true);
+      try {
+        const fetchedData = await fetchData('api/get-traffic');
+
+        // Transform fetched data to match AdvisoriesProps
+        const formattedAdvisories =
+          fetchedData.length > 0
+            ? fetchedData.map((traffic: any) => ({
+                advisoryName: traffic.name,
+                advisoryDescription: traffic.description,
+                advisoryStatus: traffic.severity,
+                advisoryDate: new Date(traffic.date).toLocaleString(),
+              }))
+            : [
+                {
+                  advisoryName: 'No Current Traffic Advisories',
+                  advisoryDescription:
+                    'There are no traffic advisories at the moment. Stay safe and check back later.',
+                  advisoryStatus: 'None',
+                  advisoryDate: new Date().toLocaleString(),
+                },
+              ];
+
+        setAdvisoryData(prev => ({
+          ...prev,
+          advisories: formattedAdvisories,
+        }));
+
+        console.log('Formatted Traffic advisories:', formattedAdvisories);
+      } catch (error) {
+        console.error('Failed to fetch Traffic data:', error);
+        setAdvisoryData(prev => ({
+          ...prev,
+          advisories: [
+            {
+              advisoryName: 'Failed to Load Data',
+              advisoryDescription:
+                'Unable to retrieve garbage collection advisories. Please check your connection or try again later.',
+              advisoryStatus: 'Unavailable',
+              advisoryDate: new Date().toLocaleString(),
+            },
+          ],
+        }));
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchTrafficData();
+  }, []);
 
   return (
     <div className="m-0 md:m-10 md:my-5 overflow-hidden">
@@ -80,7 +94,7 @@ const TrafficPage = () => {
         </div>
       </div>
 
-      <Advisories {...advisoryData} />
+      <Advisories {...advisoryData} isLoading={isLoading} />
     </div>
   );
 };
