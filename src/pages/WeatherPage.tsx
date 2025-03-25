@@ -35,37 +35,35 @@ const WeatherPage = () => {
   };
 
   return (
-    <div className='w-full p-0 md:p-10 md:rounded-xl'>
-      <div className='grid grid-cols-1 lg:grid-cols-2 md:rounded-xl md:border border-orange-500 bg-no-repeat bg-cover bg-[url(/src/assets/bg-weather.png)] h-auto p-3 md:p-15 '>
-        <div className='flex flex-col md:justify-center items-start p-2 md:p-7 gap-3'>
-          <span className='bg-[#FFFFFF] text-3xl font-bold text-[#FF6F00] p-3 rounded-xl'>Malabon Weather</span>
+    <div className='w-full p-3 md:rounded-xl'>
+      <div className='flex flex-row  items-end p-2 gap-3'>
+          <span className='bg-[#FFFFFF] text-sm md:text-lg font-extrabold text-[#FF6F00] border-3 border-[#FF6F00] p-3 rounded-md'>Malabon Weather</span>
           <div className='flex gap-3'>
-            <span className='bg-[#FFFFFF] text-xl text-[#FF6F00] p-3 rounded-xl'>
+            <span className=' text-sm bg-[#FF6F00] text-white p-3 rounded-md'>
               {weather?.current?.last_updated ? formatDate(weather.current.last_updated.split(" ")[0]) : ""}
             </span>
-            <span className='bg-[#FFFFFF] text-xl text-[#FF6F00] p-3 rounded-xl'>
-              Updated as of {weather?.current?.last_updated ? formatTime(weather.current.last_updated.split(" ")[1]) : ""}
-            </span>
           </div>
-        </div>
+      </div>
+      <div className='flex justify-flex items-end md:rounded-xl md:border border-orange-500 bg-no-repeat bg-cover bg-white h-auto p-3 overflow-auto'>
+        
         <div className='flex justify-center items-center'>
-          <div className="w-[280px] h-full">
+          <div className="w-[250px] h-full text-md md:text-xl font-bold">
             {weather?.forecast?.forecastday && (
               <WeatherCard weatherData={weather.forecast.forecastday[0].day} day="Today" />
             )}
           </div>
         </div>
-      </div>
-
-      <div className='flex flex-col pt-7 w-full'>
-        <h1 className='text-xl font-semibold text-[#FF6F00]'>Weekly Forecast</h1>
-        <WeatherChart weatherData={weather?.forecast?.forecastday || []} />
-        <div className='grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-5 mt-2 w-full p-5'>
+        <div className='flex gap-2 mt-2 pl-5 text-xs md:text-md '>
           {weather?.forecast?.forecastday?.slice(1).map((dayData: any, index: number) => (
             <WeatherCard key={index} weatherData={dayData.day} day={weekDays[index + 1]} />
             
           ))}
         </div>
+      </div>
+
+      <div className='flex flex-col pt-2 w-full'>
+        <h1 className='bg-[#FFFFFF] text-xs md:text-md font-extrabold text-[#FF6F00] border-3 border-[#FF6F00] p-3 rounded-md w-32 md:w-32 flex justify-center '>Weekly Forecast</h1>
+        <WeatherChart weatherData={weather?.forecast?.forecastday || []} />
       </div>
 
       

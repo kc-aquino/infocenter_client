@@ -43,7 +43,7 @@ const WeatherChart: React.FC<WeatherChartProps> = ({ weatherData }) => {
   const latestData = chartData[chartData.length - 7];
 
   return (
-    <Card>
+    <Card className="lg:px-20 border-0">
       <CardHeader>
       </CardHeader>
       <CardContent className="relative">

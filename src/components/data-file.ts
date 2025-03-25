@@ -20,39 +20,39 @@ export interface DataFile {
 export const DataNum: DataFile[] = [
   {
     title: 'Police',
-    Landline: ['123-4567', '987-6543'],
+    Landline: ['82873652'],
     logo: Siren,
-    Mobile: ['09123453', '09123453'],
+    Mobile: ['09217050770'],
   },
   {
     title: 'Rescue',
-    Landline: '09123453',
+    Landline: ['8-921-6009', '8-921-6029'],
     logo: LifeBuoy,
-    Mobile: ['09123453', '09123453'],
+    Mobile: ['09423729891', '09190625588'],
   },
   {
     title: 'Fire',
-    Landline: '09123453',
+    Landline: ['(02) 8361 9712', '(02) 281-4607'],
     logo: Flame,
-    Mobile: ['09123453', '09123453'],
+    Mobile: '09665000299',
   },
   {
     title: 'Medical',
-    Landline: ['123-4567', '987-6543'],
+    Landline: ['8-921-6009', ' 8-921-6029'],
     logo: HeartPulse,
-    Mobile: ['09123453', '09123453'],
+    Mobile: ['09423729891', '09190625588'],
   },
   {
     title: 'Power',
-    Landline: '09123453',
+    Landline: '(02) 16211',
     logo: UtilityPole,
-    Mobile: ['09123453', '09123453'],
+    Mobile: '(02) 16211',
   },
   {
     title: 'Water',
-    Landline: '09123453',
+    Landline: '1-800-1000-92837',
     logo: Droplet,
-    Mobile: ['09123453', '09123453'],
+    Mobile: '0998-8641446',
   },
 ];
 
