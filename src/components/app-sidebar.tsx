@@ -36,7 +36,7 @@ const data = {
       icon: Home,
     },
     {
-      title: 'Registration',
+      title: 'SMS Alert Registration',
       url: '/register',
       icon: BadgePlus,
       badge: '10',
