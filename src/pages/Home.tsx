@@ -4,6 +4,7 @@ import { DataNum, AboutUs } from '@/components/data-file';
 import TermsAndPrivacyDialog from '@/components/termsAndPrivacyDialog';
 import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
 import { useState } from 'react';
+import AboutUsImg from '@/assets/about.png';
 
 function Home() {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -56,7 +57,7 @@ function Home() {
 
             {/* About Us Image */}
             <div className="bg-no-repeat bg-cover w-full flex justify-center">
-            <img src="/src/assets/about.png" alt="About Us" className="rounded-lg" />
+            <img src={AboutUsImg} alt="About Us" className="rounded-lg" />
             </div>
 
             {/* About Us Details (Loop through `AboutUs` array) */}

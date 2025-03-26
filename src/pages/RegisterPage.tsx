@@ -34,6 +34,12 @@ const formSchema = z.object({
 export default function RegisterPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const showToast = (message: string) => {
+    setToastMessage(message);
+    setTimeout(() => setToastMessage(null), 3000);
+  };
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -64,11 +70,11 @@ export default function RegisterPage() {
       });
 
       console.log('Registration Response:', response);
-      alert('Registration successful!');
-      navigate('/');
+      showToast('Registration successful!');
+      setTimeout(() => navigate('/'), 3000);
     } catch (error) {
       console.error('Registration Error:', error);
-      alert('Failed to register. Please try again.');
+      showToast('Failed to register. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -193,6 +199,14 @@ export default function RegisterPage() {
           </CardFooter>
         </Card>
       </div>
+
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div className="fixed top-5 right-5 bg-white text-[#FF6F00] text-xs px-5 py-3 rounded-md shadow-md transition-opacity duration-300 flex gap-10 pl-0">
+          <div className='bg-[#FF6F00] w-1'></div>
+          {toastMessage}
+        </div>
+      )}
     </div>
   );
 }
