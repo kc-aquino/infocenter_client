@@ -62,8 +62,8 @@ const LocationPage: React.FC<LocationPageProps> = ({
             <div className="flex-1 bg-white/80 shadow-lg rounded-lg border border-orange-500 z-50">
               <MapContainer
                 center={activeLocation.position}
-                zoom={15}
-                className="w-full h-[300px] md:h-full rounded-md" // Fixed height for small devices
+                zoom={50}
+                className="w-full h-[300px] md:h-full rounded-md"
               >
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 <Marker

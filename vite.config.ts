@@ -12,6 +12,13 @@ export default defineConfig({
     },
   },
   server: {
-    allowedHosts: ['259d-115-85-39-154.ngrok-free.app'], // Allow the specific host
+    allowedHosts: ['259d-115-85-39-154.ngrok-free.app'],
+    proxy: {
+      '/api': {
+        target: 'http://3.107.192.185',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, ''),
+      },
+    },
   },
 });

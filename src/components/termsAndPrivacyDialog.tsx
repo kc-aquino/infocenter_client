@@ -27,17 +27,17 @@ const TermsAndPrivacyDialog = () => {
         and SMS notifications for registered users.
         <br />
         <strong>3. User Responsibilities</strong>
-        <ul>
+        <ul className="list-disc pl-5">
           <li>
-            • You must provide accurate mobile numbers when registering for SMS
+            You must provide accurate mobile numbers when registering for SMS
             notifications.
           </li>
           <li>
-            • You agree not to misuse the website for fraudulent or unlawful
+            You agree not to misuse the website for fraudulent or unlawful
             activities.
           </li>
           <li>
-            • Unauthorized access, tampering, or data extraction is strictly
+            Unauthorized access, tampering, or data extraction is strictly
             prohibited.
           </li>
         </ul>
@@ -76,25 +76,25 @@ const TermsAndPrivacyDialog = () => {
         use, and protect your personal information when you access our website.
         <br />
         <strong>2. Information We Collect</strong>
-        <ul>
+        <ul className="list-disc pl-5">
           <li>
-            • Personal Information: When you register for SMS notifications, we
+            Personal Information: When you register for SMS notifications, we
             collect your mobile number.
           </li>
           <li>
-            • Non-Personal Information: We may collect general usage data, such
-            as browser type and pages visited, to improve our website’s
+            Non-Personal Information: We may collect general usage data, such as
+            browser type and pages visited, to improve our website's
             functionality.
           </li>
         </ul>
         <strong>3. How We Use Your Information</strong>
-        <ul>
+        <ul className="list-disc pl-5">
           <li>
-            • To send SMS notifications regarding important barangay
-            announcements and emergencies.
+            To send SMS notifications regarding important barangay announcements
+            and emergencies.
           </li>
-          <li>• To improve our website and services.</li>
-          <li>• To comply with legal obligations.</li>
+          <li>To improve our website and services.</li>
+          <li>To comply with legal obligations.</li>
         </ul>
         <strong>4. Data Protection</strong>
         <br />
@@ -122,7 +122,7 @@ const TermsAndPrivacyDialog = () => {
   };
 
   return (
-    <div className="p-4 flex !flex-col justify-around items-center gap-4">
+    <div className="p-4 flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8">
       {/* Privacy Policy Trigger */}
       <Dialog
         open={modalType === 'privacy'}
@@ -131,7 +131,7 @@ const TermsAndPrivacyDialog = () => {
         <DialogTrigger asChild>
           <a
             href="#"
-            className="text-orange-500 underline cursor-pointer text-sm"
+            className="text-orange-500 underline cursor-pointer text-sm sm:text-base"
             onClick={e => {
               e.preventDefault();
               setModalType('privacy');
@@ -140,11 +140,11 @@ const TermsAndPrivacyDialog = () => {
             Privacy Policy
           </a>
         </DialogTrigger>
-        <DialogContent className=" !w-[800px] !max-w-4xl">
+        <DialogContent className="w-[95vw] max-w-[95vw] sm:w-[800px] sm:max-w-4xl">
           <DialogHeader>
             <DialogTitle>Privacy Policy</DialogTitle>
           </DialogHeader>
-          <div className="p-4 max-h-[400px] overflow-y-auto text-sm whitespace-pre-line text-gray-700 border border-gray-400 rounded-lg">
+          <div className="p-4 max-h-[60vh] sm:max-h-[400px] overflow-y-auto text-xs sm:text-sm whitespace-pre-line text-gray-700 border border-gray-400 rounded-lg">
             {content.privacy}
           </div>
           <Button className="mt-4" onClick={() => setModalType(null)}>
@@ -161,7 +161,7 @@ const TermsAndPrivacyDialog = () => {
         <DialogTrigger asChild>
           <a
             href="#"
-            className="text-orange-500 underline cursor-pointer text-sm"
+            className="text-orange-500 underline cursor-pointer text-sm sm:text-base"
             onClick={e => {
               e.preventDefault();
               setModalType('terms');
@@ -170,11 +170,11 @@ const TermsAndPrivacyDialog = () => {
             Terms and Conditions
           </a>
         </DialogTrigger>
-        <DialogContent className=" !w-[800px] !max-w-4xl ">
+        <DialogContent className="w-[95vw] max-w-[95vw] sm:w-[800px] sm:max-w-4xl">
           <DialogHeader>
             <DialogTitle>Terms and Conditions</DialogTitle>
           </DialogHeader>
-          <div className="p-4 max-h-[400px] overflow-y-auto text-sm whitespace-pre-line text-gray-700 border border-gray-400 rounded-lg">
+          <div className="p-4 max-h-[60vh] sm:max-h-[400px] overflow-y-auto text-xs sm:text-sm whitespace-pre-line text-gray-700 border border-gray-400 rounded-lg">
             {content.terms}
           </div>
           <Button className="mt-4" onClick={() => setModalType(null)}>
