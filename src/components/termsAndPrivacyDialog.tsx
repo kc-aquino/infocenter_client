@@ -122,37 +122,7 @@ const TermsAndPrivacyDialog = () => {
   };
 
   return (
-    <div className="p-4 flex justify-around">
-      {/* Terms Trigger */}
-      <Dialog
-        open={modalType === 'terms'}
-        onOpenChange={() => setModalType(null)}
-      >
-        <DialogTrigger asChild>
-          <a
-            href="#"
-            className="text-gray-600 underline cursor-pointer mr-4 text-sm"
-            onClick={e => {
-              e.preventDefault();
-              setModalType('terms');
-            }}
-          >
-            Terms and Conditions
-          </a>
-        </DialogTrigger>
-        <DialogContent className=" !w-[800px] !max-w-4xl ">
-          <DialogHeader>
-            <DialogTitle>Terms and Conditions</DialogTitle>
-          </DialogHeader>
-          <div className="p-4 max-h-[400px] overflow-y-auto text-sm whitespace-pre-line text-gray-700 border border-gray-400 rounded-lg">
-            {content.terms}
-          </div>
-          <Button className="mt-4" onClick={() => setModalType(null)}>
-            Close
-          </Button>
-        </DialogContent>
-      </Dialog>
-
+    <div className="p-4 flex !flex-col justify-around items-center gap-4">
       {/* Privacy Policy Trigger */}
       <Dialog
         open={modalType === 'privacy'}
@@ -161,7 +131,7 @@ const TermsAndPrivacyDialog = () => {
         <DialogTrigger asChild>
           <a
             href="#"
-            className="text-gray-600 underline cursor-pointer text-sm"
+            className="text-orange-500 underline cursor-pointer text-sm"
             onClick={e => {
               e.preventDefault();
               setModalType('privacy');
@@ -176,6 +146,36 @@ const TermsAndPrivacyDialog = () => {
           </DialogHeader>
           <div className="p-4 max-h-[400px] overflow-y-auto text-sm whitespace-pre-line text-gray-700 border border-gray-400 rounded-lg">
             {content.privacy}
+          </div>
+          <Button className="mt-4" onClick={() => setModalType(null)}>
+            Close
+          </Button>
+        </DialogContent>
+      </Dialog>
+
+      {/* Terms Trigger */}
+      <Dialog
+        open={modalType === 'terms'}
+        onOpenChange={() => setModalType(null)}
+      >
+        <DialogTrigger asChild>
+          <a
+            href="#"
+            className="text-orange-500 underline cursor-pointer text-sm"
+            onClick={e => {
+              e.preventDefault();
+              setModalType('terms');
+            }}
+          >
+            Terms and Conditions
+          </a>
+        </DialogTrigger>
+        <DialogContent className=" !w-[800px] !max-w-4xl ">
+          <DialogHeader>
+            <DialogTitle>Terms and Conditions</DialogTitle>
+          </DialogHeader>
+          <div className="p-4 max-h-[400px] overflow-y-auto text-sm whitespace-pre-line text-gray-700 border border-gray-400 rounded-lg">
+            {content.terms}
           </div>
           <Button className="mt-4" onClick={() => setModalType(null)}>
             Close

@@ -1,23 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Advisories } from '../components/advisories';
 import Tsunami from '../assets/Tsunami.png';
 import { fetchData } from '@/lib/api';
 
+interface Advisory {
+    advisoryName: string;
+    advisoryDescription: string;
+    advisoryStatus: string;
+    advisoryDate: string;
+  }
+
 const FloodPage = () => {
-  const [advisoryData, setAdvisoryData] = useState({
-    title: 'Flood Alerts',
-    description:
-      'Stay informed about the latest flood advisories and safety measures in your area.',
-    header: {
-      image: Tsunami,
-    },
-    advisories: [],
-  });
-  const [isLoading, setIsLoading] = useState(true);
+  const [advisoryData, setAdvisoryData] = useState<{
+      title: string;
+      description: string;
+      header: { image: string };
+      advisories: Advisory[];
+    }>({
+      title: 'Flood Alerts',
+      description:
+        'Stay informed about the latest flood advisories and safety measures in your area.',
+      header: {
+        image: Tsunami,
+      },
+      advisories: [],
+    });
 
   useEffect(() => {
     const fetchFloodData = async () => {
-      setIsLoading(true);
       try {
         const fetchedData = await fetchData('api/get-floods');
         const formattedAdvisories =
@@ -56,9 +66,7 @@ const FloodPage = () => {
             },
           ],
         }));
-      } finally {
-        setIsLoading(false);
-      }
+      } 
     };
 
     fetchFloodData();
@@ -66,7 +74,7 @@ const FloodPage = () => {
 
   return (
     <div className="m-0 md:m-10 md:my-5 overflow-hidden">
-      <Advisories {...advisoryData} isLoading={isLoading} />
+      <Advisories {...advisoryData} />
     </div>
   );
 };

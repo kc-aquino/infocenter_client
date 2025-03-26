@@ -1,19 +1,15 @@
 import React from "react";
-import { TrendingUp } from "lucide-react";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
-  ChartTooltipContent,
 } from "@/components/ui/chart";
 
 // Define props for WeatherChart
@@ -43,7 +39,7 @@ const WeatherChart: React.FC<WeatherChartProps> = ({ weatherData }) => {
   const latestData = chartData[chartData.length - 7];
 
   return (
-    <Card className="lg:px-20 border-0">
+    <Card className="lg:px-20 border-orange-500">
       <CardHeader>
       </CardHeader>
       <CardContent className="relative">
