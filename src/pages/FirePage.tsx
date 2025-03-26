@@ -3,6 +3,12 @@ import { Advisories } from '../components/advisories';
 import Fire from '../assets/Fire.png';
 import { fetchData } from '@/lib/api';
 
+interface FireAdvisory {
+  name: string;
+  description: string;
+  status: string; // Changed from severity to status
+  date: string;
+}
 
 const FirePage = () => {
   interface Advisory {
@@ -31,12 +37,18 @@ const FirePage = () => {
     const fetchFireData = async () => {
       try {
         const fetchedData = await fetchData('api/get-fire');
+
         const formattedAdvisories =
           fetchedData.length > 0
-            ? fetchedData.map((fire: any) => ({
+            ? fetchedData.map((fire: FireAdvisory) => ({
                 advisoryName: fire.name,
                 advisoryDescription: fire.description,
-                advisoryStatus: fire.severity,
+                advisoryStatus:
+                  fire.status === 'option1'
+                    ? 'Ongoing'
+                    : fire.status === 'option2'
+                    ? 'Fire Out'
+                    : 'Unknown', // Map the status values
                 advisoryDate: new Date(fire.date).toLocaleString(),
               }))
             : [

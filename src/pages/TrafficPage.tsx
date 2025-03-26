@@ -4,11 +4,11 @@ import { Advisories } from '@/components/advisories';
 import { fetchData } from '@/lib/api';
 
 interface Advisory {
-    advisoryName: string;
-    advisoryDescription: string;
-    advisoryStatus: string;
-    advisoryDate: string;
-  }
+  advisoryName: string;
+  advisoryDescription: string;
+  advisoryStatus: string;
+  advisoryDate: string;
+}
 
 const TrafficPage = () => {
   const fbPageLink = 'https://www.facebook.com/profile.php?id=61558093977723';
@@ -37,7 +37,7 @@ const TrafficPage = () => {
             ? fetchedData.map((traffic: any) => ({
                 advisoryName: traffic.name,
                 advisoryDescription: traffic.description,
-                advisoryStatus: traffic.severity,
+                advisoryStatus: traffic.reason,
                 advisoryDate: new Date(traffic.date).toLocaleString(),
               }))
             : [
