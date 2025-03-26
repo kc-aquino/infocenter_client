@@ -3,11 +3,11 @@ import { Sun, CloudSun, Cloud, CloudFog, CloudRain, CloudLightning, Snowflake } 
 
 const weatherIcons: { [key: string]: JSX.Element } = {
     "Sunny": <Sun size={50} color="#FF6F00" />,
-    "Partly cloudy": <CloudSun size={50} color="#FF6F00" />,
+    "Partly Cloudy": <CloudSun size={50} color="#FF6F00" />,
     "Cloudy": <Cloud size={50} color="#FF6F00" />,
     "Overcast": <Cloud size={50} color="#FF6F00" />,
     "Mist": <CloudFog size={50} color="#FF6F00" />,
-    "Patchy rain": <CloudRain size={50} color="#FF6F00" />,
+    "Patchy rain nearby": <CloudRain size={50} color="#FF6F00" />,
     "Rain": <CloudRain size={50} color="#FF6F00" />,
     "Thunderstorm": <CloudLightning size={50} color="#FF6F00" />,
     "Snow": <Snowflake size={50} color="#FF6F00" />,
@@ -24,13 +24,15 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData, day }) => {
     const isToday = day === "Today";
     if (!weatherData) return <p>Loading...</p>;
 
+    console.log(weatherData.condition.text)
+
     return (
         <div className={`flex flex-col gap-5 items-center justify-between rounded-md bg-[#FF6F00] text-[#FF6F00]  ${isToday ? 'w-full h-80 p-2' : 'h-64 w-32 pb-6 px-2 pt-4'}`}>
             <div className='bg-white font-bold rounded-full px-4 py-1 flex justify-start items-start text-md'>
                 {day}
             </div>
             <div className={`${isToday ? 'w-full px-0' : ''}`}>
-                <div className={`flex justify-center items-center w-full bg-white rounded-lg ' ${isToday ? 'w-full p-3' : 'w-full h-full p-[15px]'}`}>
+                <div className={`flex justify-center items-center w-full bg-white rounded-lg ' ${isToday ? 'w-full p-3' : 'w-full h-[70px] p-[15px]'}`}>
                     <div className='rounded-lg flex justify-center h-full' >
                         {weatherIcons[weatherData.condition.text] || <Cloud size={40} color="#FF6F00" />}
                     </div>
