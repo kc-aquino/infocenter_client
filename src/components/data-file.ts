@@ -71,7 +71,7 @@ export const AboutUs: DataFile[] = [
 
 const API_URL = import.meta.env.VITE_WEATHER_API_URL;
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
-const LOCATION = import.meta.env.VITE_WEATHER_LOCATION || 'manila';
+const LOCATION = import.meta.env.VITE_WEATHER_LOCATION || 'Dampalit';
 const DAYS = import.meta.env.VITE_WEATHER_DAYS; // Fetch the full week
 
 export const fetchWeatherData = async () => {
