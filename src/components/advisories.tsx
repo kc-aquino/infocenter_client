@@ -77,7 +77,7 @@ export function Advisories({
               </div>
               <span className="font-semibold text-lg sm:ml-4 sm:mt-0 mt-2">
                 {(() => {
-                  const advisoryDate = new Date(advisories[0].advisoryDate);
+                  const advisoryDate = new Date(advisories[0].advisoryDate || new Date());
                   const currentDate = new Date();
                   const diffInHours = Math.ceil(
                     (advisoryDate.getTime() - currentDate.getTime()) /
@@ -131,3 +131,5 @@ export function Advisories({
     </div>
   );
 }
+
+export default Advisories;

@@ -1,10 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Advisories } from '../components/advisories';
 import Fire from '../assets/Fire.png';
 import { fetchData } from '@/lib/api';
 
 const FirePage = () => {
-  const [advisoryData, setAdvisoryData] = useState({
+  interface Advisory {
+    advisoryName: string;
+    advisoryDescription: string;
+    advisoryStatus: string;
+    advisoryDate: string;
+  }
+
+  const [advisoryData, setAdvisoryData] = useState<{
+    title: string;
+    description: string;
+    header: { image: string };
+    advisories: Advisory[];
+  }>({
     title: 'Fire Alerts',
     description:
       'Stay informed about the latest fire incidents and safety updates in your area.',
@@ -13,11 +25,9 @@ const FirePage = () => {
     },
     advisories: [],
   });
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchFireData = async () => {
-      setIsLoading(true);
       try {
         const fetchedData = await fetchData('api/get-fire');
         const formattedAdvisories =
@@ -56,8 +66,6 @@ const FirePage = () => {
             },
           ],
         }));
-      } finally {
-        setIsLoading(false);
       }
     };
 
@@ -66,7 +74,7 @@ const FirePage = () => {
 
   return (
     <div className="m-0 md:m-10 md:my-5 overflow-hidden">
-      <Advisories {...advisoryData} isLoading={isLoading} />
+      <Advisories {...advisoryData} />
     </div>
   );
 };

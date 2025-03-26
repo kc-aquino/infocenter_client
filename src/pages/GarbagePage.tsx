@@ -1,10 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Advisories } from '../components/advisories';
 import { fetchData } from '@/lib/api';
 
+interface Advisory {
+  advisoryName: string;
+  advisoryDescription: string;
+  advisoryStatus: string;
+  advisoryDate: string;
+}
+
 const GarbagePage = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [advisoryData, setAdvisoryData] = useState({
+  const [advisoryData, setAdvisoryData] = useState<{
+    title: string;
+    description: string;
+    header: { type: string };
+    advisories: Advisory[];
+  }>({
     title: 'Garbage Alerts',
     description:
       'Stay informed about the latest garbage collection updates and safety measures in your area.',
@@ -16,7 +27,6 @@ const GarbagePage = () => {
 
   useEffect(() => {
     const fetchGarbageData = async () => {
-      setIsLoading(true);
       try {
         const fetchedData = await fetchData('api/get-garbage-collection');
 
@@ -66,8 +76,6 @@ const GarbagePage = () => {
             },
           ],
         }));
-      } finally {
-        setIsLoading(false);
       }
     };
 
@@ -76,7 +84,7 @@ const GarbagePage = () => {
 
   return (
     <div className="m-0 md:m-10 md:my-5 overflow-hidden">
-      <Advisories {...advisoryData} isLoading={isLoading} />
+      <Advisories {...advisoryData} />
     </div>
   );
 };

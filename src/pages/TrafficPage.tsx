@@ -1,12 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Advisories } from '@/components/advisories';
 import { fetchData } from '@/lib/api';
 
+interface Advisory {
+  advisoryName: string;
+  advisoryDescription: string;
+  advisoryStatus: string;
+  advisoryDate: string;
+}
+
 const TrafficPage = () => {
   const fbPageLink = 'https://www.facebook.com/profile.php?id=61558093977723';
-  const [isLoading, setIsLoading] = useState(true);
-  const [advisoryData, setAdvisoryData] = useState({
+  const [advisoryData, setAdvisoryData] = useState<{
+    title: string;
+    description: string;
+    header: { type: string };
+    advisories: Advisory[];
+  }>({
     title: 'Traffic Alerts',
     description: 'A record of traffic advisories along nearby locations',
     header: {
@@ -17,7 +28,6 @@ const TrafficPage = () => {
 
   useEffect(() => {
     const fetchTrafficData = async () => {
-      setIsLoading(true);
       try {
         const fetchedData = await fetchData('api/get-traffic');
 
@@ -60,8 +70,6 @@ const TrafficPage = () => {
             },
           ],
         }));
-      } finally {
-        setIsLoading(false);
       }
     };
 

@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { fetchData } from '@/lib/api';
 import { useState } from 'react';
 import { z } from 'zod';
@@ -101,7 +100,7 @@ export default function RegisterPage() {
                     <FormField
                       key={field}
                       control={form.control}
-                      name={field as keyof typeof form.defaultValues}
+                      name={field as keyof z.infer<typeof formSchema>}
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>

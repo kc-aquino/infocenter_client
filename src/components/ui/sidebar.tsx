@@ -496,6 +496,7 @@ function SidebarMenuButton({
   size = 'default',
   tooltip,
   className,
+  onClick,
   ...props
 }: React.ComponentProps<'button'> & {
   asChild?: boolean;
@@ -505,7 +506,7 @@ function SidebarMenuButton({
   const Comp = asChild ? Slot : 'button';
   const { isMobile, state } = useSidebar();
 
-  const handleClick = (event: React.MouseEvent) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault(); // Prevent default behavior
     onClick?.(event); // Call the provided onClick handler
   };

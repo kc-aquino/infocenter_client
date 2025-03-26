@@ -1,11 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Advisories } from '../components/advisories';
 import Tsunami from '../assets/Tsunami.png';
 import { fetchData } from '@/lib/api';
 
+interface Advisory {
+  advisoryName: string;
+  advisoryDescription: string;
+  advisoryStatus: string;
+  advisoryDate: string;
+}
+
 const TsunamiPage = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [advisoryData, setAdvisoryData] = useState({
+  const [advisoryData, setAdvisoryData] = useState<{
+    title: string;
+    description: string;
+    header: { image: string };
+    advisories: Advisory[];
+  }>({
     title: 'Tsunami Alerts',
     description:
       'Stay informed about the latest tsunami advisories and safety measures in your area.',
@@ -17,7 +28,6 @@ const TsunamiPage = () => {
 
   useEffect(() => {
     const fetchTsunamiData = async () => {
-      setIsLoading(true);
       try {
         const fetchedData = await fetchData('api/get-tsunamis');
         const formattedAdvisories =
@@ -59,8 +69,6 @@ const TsunamiPage = () => {
             },
           ],
         }));
-      } finally {
-        setIsLoading(false);
       }
     };
 

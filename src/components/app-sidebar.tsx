@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
   Home,
-  BadgeInfo,
   HousePlug,
   BadgePlus,
   Warehouse,
@@ -12,7 +11,6 @@ import {
   Flame,
   CloudSun,
   Car,
-  Droplet,
   BriefcaseMedical,
 } from 'lucide-react';
 
