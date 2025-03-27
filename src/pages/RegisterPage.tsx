@@ -57,9 +57,7 @@ export default function RegisterPage() {
       setLoading(true);
 
       let contactNumber = values.contactNumber.replace(/\D/g, '');
-      if (contactNumber.startsWith('63'))
-        contactNumber = contactNumber.slice(2);
-      if (contactNumber.length === 9) contactNumber = '9' + contactNumber;
+      if (contactNumber.length === 9) contactNumber = '639' + contactNumber;
 
       const response = await fetchData('api/register-sms', 'POST', {
         FirstName: values.firstName,
@@ -71,6 +69,13 @@ export default function RegisterPage() {
 
       console.log('Registration Response:', response);
       showToast('Registration successful!');
+      form.reset({
+          firstName: '',
+          middleName: '',
+          lastName: '',
+          contactNumber: '',
+          email: '',
+      });
       setTimeout(() => navigate('/'), 3000);
     } catch (error) {
       console.error('Registration Error:', error);
@@ -144,19 +149,29 @@ export default function RegisterPage() {
                       <FormItem>
                         <FormLabel>Contact Number</FormLabel>
                         <FormControl>
-                          <Input
-                            className="bg-white"
-                            {...field}
-                            placeholder="+639XXXXXXXXX"
-                            value={`+639${field.value}`}
-                            onChange={e => {
-                              const inputValue = e.target.value
-                                .replace(/^\+639/, '')
-                                .replace(/\D/g, '')
-                                .slice(0, 9);
-                              field.onChange(inputValue);
-                            }}
-                          />
+                        <Input
+                        className="bg-white"
+                        {...field}
+                        placeholder="+639XXXXXXXXX"
+                        value={`+639${field.value}`}
+                        onChange={e => {
+                            let inputValue = e.target.value.replace(/\D/g, '');
+
+                            if (!inputValue.startsWith('639')) {
+                            inputValue = '639' + inputValue.replace(/^639/, '');
+                            }
+
+                            inputValue = inputValue.slice(0, 12);
+
+                            field.onChange(inputValue.slice(3));
+                        }}
+                        onKeyDown={e => {
+                            const cursorAtPrefix = (e.target as HTMLInputElement).selectionStart! <= 4;
+                            if (cursorAtPrefix && e.key === "Backspace") {
+                            e.preventDefault();
+                            }
+                        }}
+                        />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
