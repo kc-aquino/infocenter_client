@@ -70,11 +70,15 @@ export function Advisories({
             (() => {
               const latestAdvisory = advisories
                 .filter(a => a.advisoryDate) // Ensure valid dates
-                .sort((a, b) => new Date(b.advisoryDate) - new Date(a.advisoryDate))[0]; // Get latest advisory
+                .sort((a, b) => {
+                  const dateA = a.advisoryDate ? new Date(a.advisoryDate).getTime() : 0;
+                  const dateB = b.advisoryDate ? new Date(b.advisoryDate).getTime() : 0;
+                  return dateB - dateA;
+                })[0]; // Get latest advisory
 
               if (!latestAdvisory) return null; // Handle empty or invalid data
 
-              const advisoryDate = new Date(latestAdvisory.advisoryDate);
+              const advisoryDate = new Date(latestAdvisory.advisoryDate ?? '');
               const currentDate = new Date();
               const diffInHours = Math.ceil(
                 (advisoryDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60)
