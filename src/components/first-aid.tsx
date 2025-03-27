@@ -20,14 +20,15 @@ interface FirstAidProps {
 }
 
 export function FirstAid({ title, description, firstAidItems }: FirstAidProps) {
-  const [selectedLink, setSelectedLink] = useState<string>(
-    firstAidItems[0]?.itemLink || '',
-  );
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+    const [selectedLink, setSelectedLink] = useState<string>('');
+    const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
-  useEffect(() => {
-    console.log('Selected video link:', selectedLink);
-  }, [selectedLink]);
+    // Update selectedLink when firstAidItems updates
+    useEffect(() => {
+      if (firstAidItems.length > 0) {
+        setSelectedLink(firstAidItems[0].itemLink);
+      }
+    }, [firstAidItems]);
 
   const handleCardClick = (index: number, link: string) => {
     setSelectedIndex(index);

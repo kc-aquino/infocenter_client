@@ -33,7 +33,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData, day }) => {
             </div>
             <div className={`${isToday ? 'w-full px-0' : ''}`}>
                 <div className={`flex justify-center items-center w-full bg-white rounded-lg ' ${isToday ? 'w-full p-3' : 'w-full h-[70px] p-[15px]'}`}>
-                    <div className='rounded-lg flex justify-center h-full' >
+                    <div className='rounded-lg flex items-center justify-center h-full w-[70px]' >
                         {weatherIcons[weatherData.condition.text] || <Cloud size={40} color="#FF6F00" />}
                     </div>
                 </div>

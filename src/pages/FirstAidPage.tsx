@@ -1,43 +1,72 @@
 import { FirstAid } from '../components/first-aid';
+import { useEffect, useState } from 'react';
+import { fetchData } from '@/lib/api';
+
+interface FirstAid {
+    name: string;
+    description: string;
+    link: string;
+}
 
 const FirstAidPage = () => {
-    const data = [
-        {
-            title: 'First Aid',
-            description: 'Sample first aid description.',
-            firstAidItems: [
-                {
-                    itemTitle: 'First Aid for Training',
-                    itemDescription: 'How to help someone choking.',
-                    itemLink: 'https://www.youtube.com/watch?v=ea1RJUOiNfQ'
-                },
-                {
-                    itemTitle: 'How to do CPR on an Adult',
-                    itemDescription: 'Learn how to perform CPR.',
-                    itemLink: 'https://www.youtube.com/watch?v=BQNNOh8c8ks'
-                },
-                {
-                    itemTitle: 'Treating Burns',
-                    itemDescription: 'Steps to treat burns safely.',
-                    itemLink: 'https://www.youtube.com/watch?v=XGnLkUty69g'
-                },
-                {
-                    itemTitle: 'First Aid for Bleeding',
-                    itemDescription: 'How to stop bleeding effectively.',
-                    itemLink: 'https://www.youtube.com/watch?v=NxO5LvgqZe0'
-                },
-                {
-                    itemTitle: 'Stroke First Aid',
-                    itemDescription: 'Recognizing and helping stroke victims.',
-                    itemLink: 'https://www.youtube.com/watch?v=EYUDS3wVWEk'
-                }
-            ]
+    interface FirstAidItems {
+        itemTitle: string;
+        itemDescription: string;
+        itemLink: string;
+    }
+
+    const [firstAidItems, setFirstAidItems] = useState<{
+        title: string;
+        description: string;
+        firstAidItems: FirstAidItems[];
+      }>({
+        title: 'First Aid',
+        description:
+          'Watch videos to help you handle medical emergencies effectively.',
+        firstAidItems: [],
+      });
+
+    useEffect(() => {
+        const fetchFirstAidData = async () => {
+            try {
+                const fetchedData = await fetchData('api/get-first-aid');
+                console.log('Fetched Data:', fetchedData);
+                const formattedFirstAidItems=
+                  fetchedData.length > 0
+                    ? fetchedData.map((firstAid: FirstAid) => ({
+                        itemTitle: firstAid.name,
+                        itemDescription: firstAid.description,
+                        itemLink: firstAid.link,
+                      }))
+                    : [];
+
+                setFirstAidItems(prev => ({
+                    ...prev,
+                    firstAidItems: formattedFirstAidItems,
+                }));
+
+                console.log(firstAidItems);
+            } catch (error) {
+                console.error('Error fetching first aid data:', error);
+                setFirstAidItems(prev => ({
+                    ...prev,
+                    firstAidItems: [
+                        {
+                            itemTitle: 'First Aid Training',
+                            itemDescription: 'How to help someone choking.',
+                            itemLink: 'https://www.youtube.com/watch?v=ea1RJUOiNfQ'
+                        }
+                    ],
+                }))
+            }
         }
-    ];
+
+        fetchFirstAidData();
+    }, []);
 
     return (
         <div className='m-0 md:m-10 md:my-5 overflow-hidden'>
-            <FirstAid {...data[0]} />
+            <FirstAid {...firstAidItems} />
         </div>
     );
 };

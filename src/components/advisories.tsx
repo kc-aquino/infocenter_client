@@ -67,32 +67,40 @@ export function Advisories({
               </div>
             </div>
           ) : header.type === 'garbage' && advisories.length > 0 ? (
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full">
-              <div>
-                <h2 className="text-xl font-semibold">
-                  {advisories[0].advisoryName}
-                </h2>
-                <h3 className="text-sm text-white/90">
-                  {advisories[0].advisoryDate}
-                </h3>
-                <p className="text-sm text-white/90">
-                  {advisories[0].advisoryDescription}
-                </p>
-              </div>
-              <span className="font-semibold text-lg sm:ml-4 sm:mt-0 mt-2">
-                {(() => {
-                  const advisoryDate = new Date(advisories[0].advisoryDate || new Date());
-                  const currentDate = new Date();
-                  const diffInHours = Math.ceil(
-                    (advisoryDate.getTime() - currentDate.getTime()) /
-                      (1000 * 60 * 60),
-                  );
-                  return diffInHours > 0
-                    ? `${diffInHours} hours til next collection`
-                    : 'Collection time passed';
-                })()}
-              </span>
-            </div>
+            (() => {
+              const latestAdvisory = advisories
+                .filter(a => a.advisoryDate) // Ensure valid dates
+                .sort((a, b) => new Date(b.advisoryDate) - new Date(a.advisoryDate))[0]; // Get latest advisory
+
+              if (!latestAdvisory) return null; // Handle empty or invalid data
+
+              const advisoryDate = new Date(latestAdvisory.advisoryDate);
+              const currentDate = new Date();
+              const diffInHours = Math.ceil(
+                (advisoryDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60)
+              );
+
+              return (
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full">
+                  <div>
+                    <h2 className="text-xl font-semibold">
+                      {latestAdvisory.advisoryName}
+                    </h2>
+                    <h3 className="text-sm text-white/90">
+                      {latestAdvisory.advisoryDate}
+                    </h3>
+                    <p className="text-sm text-white/90">
+                      {latestAdvisory.advisoryDescription}
+                    </p>
+                  </div>
+                  <span className="font-semibold text-lg sm:ml-4 sm:mt-0 mt-2">
+                    {diffInHours > 0
+                      ? `${diffInHours} hours til next collection`
+                      : 'Collection time passed'}
+                  </span>
+                </div>
+              );
+            })()
           ) : null}
         </div>
       )}
@@ -104,7 +112,7 @@ export function Advisories({
         </CardHeader>
 
         <CardContent className="flex-1 overflow-y-auto space-y-2">
-          {advisories.map((advisory, index) => (
+          {[...advisories].reverse().map((advisory, index) => (
             <div
               key={index}
               className={`p-4 rounded-lg flex justify-between items-start shadow-sm ${
