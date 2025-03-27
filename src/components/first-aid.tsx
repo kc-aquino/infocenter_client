@@ -74,15 +74,19 @@ export function FirstAid({ title, description, firstAidItems }: FirstAidProps) {
             >
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full">
                 <div>
-                  <h3
-                    className={`font-semibold ${
+                  <h1
+                    className={`font-semibold text-lg ${
                       index === selectedIndex ? 'text-white' : 'text-gray-900'
                     }`}
                   >
                     {firstAidItem.itemTitle}
+                  </h1>
+                  <h3 className={`text-sm font-medium ${index === selectedIndex ? 'text-white/80' : 'text-gray-500'}`}
+                  >
+                    {firstAidItem.itemDescription}
                   </h3>
                   <span
-                    className={`text-sm font-medium ${
+                    className={`text-xs font-medium ${
                       index === selectedIndex
                         ? 'text-white/80'
                         : 'text-gray-500'
