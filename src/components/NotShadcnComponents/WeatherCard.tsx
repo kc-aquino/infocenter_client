@@ -27,8 +27,8 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData, day }) => {
     console.log(weatherData.condition.text)
 
     return (
-        <div className={`flex flex-col gap-5 items-center justify-between rounded-md bg-[#FF6F00] text-[#FF6F00]  ${isToday ? 'w-full h-80 p-2' : 'h-64 w-32 pb-6 px-2 pt-4'}`}>
-            <div className='bg-white font-bold rounded-full px-4 py-1 flex justify-start items-start text-md'>
+        <div className={`flex flex-col gap-5 mx-2.5  justify-between rounded-md bg-[#FF6F00] text-[#FF6F00]  ${isToday ? 'w-full h-80 p-2' : 'items-center h-64 w-32 pb-6 px-2 pt-4'}`}>
+            <div className='bg-white font-bold rounded-lg px-4 py-1 flex justify-center items-start text-md'>
                 {day}
             </div>
             <div className={`${isToday ? 'w-full px-0' : ''}`}>
