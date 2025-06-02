@@ -27,9 +27,9 @@ const WeatherPage = () => {
     return (
         <div className='w-full p-3 md:rounded-xl'>
             <div className='flex flex-row items-center py-2 gap-3'>
-                <span className='bg-[#FFFFFF] text-sm md:text-lg font-extrabold text-[#FF6F00] border-3 border-[#FF6F00] p-3 rounded-md'>Malabon Weather</span>
+                <span className='bg-[#FFFFFF] text-sm md:text-lg font-extrabold text-[#2a2a92] border-3 border-[#2a2a92] p-3 rounded-md'>Malabon Weather</span>
                 <div className='flex gap-3'>
-                    <span className=' text-sm bg-[#FF6F00] text-white p-3 rounded-md'>
+                    <span className=' text-sm bg-[#2a2a92] text-white p-3 rounded-md'>
                         {weather?.current?.last_updated ? formatDate(weather.current.last_updated.split(" ")[0]) : ""}
                     </span>
                 </div>
@@ -51,7 +51,7 @@ const WeatherPage = () => {
                 </div>
             </div>
 
-            <span className="bg-[#FFFFFF] text-sm md:text-lg font-extrabold text-[#FF6F00] border-3 border-[#FF6F00] rounded-md inline-block p-3 mt-3">
+            <span className="bg-[#FFFFFF] text-sm md:text-lg font-extrabold text-[#2a2a92] border-3 border-[#2a2a92] rounded-md inline-block p-3 mt-3">
                 Weekly Forecast
             </span>
             <div className='flex flex-col pt-2 w-full gap-3'>
