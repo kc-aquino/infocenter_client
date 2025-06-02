@@ -131,7 +131,7 @@ const TermsAndPrivacyDialog = () => {
         <DialogTrigger asChild>
           <a
             href="#"
-            className="text-orange-500 underline cursor-pointer text-sm sm:text-base"
+            className="text-[#2a2a92] underline cursor-pointer text-sm sm:text-base"
             onClick={e => {
               e.preventDefault();
               setModalType('privacy');
@@ -161,7 +161,7 @@ const TermsAndPrivacyDialog = () => {
         <DialogTrigger asChild>
           <a
             href="#"
-            className="text-orange-500 underline cursor-pointer text-sm sm:text-base"
+            className="text-[#2a2a92] underline cursor-pointer text-sm sm:text-base"
             onClick={e => {
               e.preventDefault();
               setModalType('terms');

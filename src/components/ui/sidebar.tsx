@@ -185,7 +185,7 @@ function Sidebar({
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
-          className="bg-orange-500 text-sidebar-foreground w-[--sidebar-width] p-0 [&>button]:hidden"
+          className="bg-[#2a2a92] text-sidebar-foreground w-[--sidebar-width] p-0 [&>button]:hidden"
           style={{ '--sidebar-width': SIDEBAR_WIDTH_MOBILE }}
           side={side}
         >
@@ -238,7 +238,7 @@ function Sidebar({
         <div
           data-sidebar="sidebar"
           data-slot="sidebar-inner"
-          className="bg-orange-500 group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
+          className="bg-[#2a2a92] group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
         >
           {children}
         </div>

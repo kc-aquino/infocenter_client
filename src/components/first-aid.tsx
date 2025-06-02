@@ -68,7 +68,7 @@ export function FirstAid({ title, description, firstAidItems }: FirstAidProps) {
               onClick={() => handleCardClick(index, firstAidItem.itemLink)}
               className={`p-4 rounded-lg flex justify-between items-start shadow-sm cursor-pointer ${
                 index === selectedIndex
-                  ? 'bg-orange-500 text-white'
+                  ? 'bg-[#2a2a92] text-white'
                   : 'bg-white'
               }`}
             >

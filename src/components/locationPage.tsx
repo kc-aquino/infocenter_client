@@ -43,7 +43,7 @@ const LocationPage: React.FC<LocationPageProps> = ({
         onValueChange={value => setActiveTab(value)}
       >
         <div className="flex items-center justify-between mb-4">
-          <h1 className="text-2xl font-semibold text-orange-500">
+          <h1 className="text-2xl font-semibold text-[#2a2a92]">
             {activeLocation.name}
           </h1>
 
@@ -59,7 +59,7 @@ const LocationPage: React.FC<LocationPageProps> = ({
         <TabsContent value={activeTab}>
           <div className="flex flex-col md:flex-row gap-4 h-full">
             {/* Map Card */}
-            <div className="flex-1 bg-white/80 shadow-lg rounded-lg border border-orange-500 z-50">
+            <div className="flex-1 bg-white/80 shadow-lg rounded-lg border border-[#2a2a92] z-50">
               <MapContainer
                 center={activeLocation.position}
                 zoom={50}
@@ -83,7 +83,7 @@ const LocationPage: React.FC<LocationPageProps> = ({
             </div>
 
             {/* Location Details */}
-            <Card className="flex-1 bg-white/80 shadow-lg rounded-lg border border-orange-500">
+            <Card className="flex-1 bg-white/80 shadow-lg rounded-lg border border-[#2a2a92]">
               <CardContent>
                 <Avatar className="mx-auto mb-4 w-full h-80 rounded-lg">
                   <AvatarImage
@@ -92,12 +92,12 @@ const LocationPage: React.FC<LocationPageProps> = ({
                   />
                   <AvatarFallback>{activeLocation.name}</AvatarFallback>
                 </Avatar>
-                <h2 className="text-xl font-semibold text-[#FF6F00]">
+                <h2 className="text-xl font-semibold text-[#2a2a92]">
                   {activeLocation.name}
                 </h2>
                 <div className="flex items-center gap-2 mt-2">
                   <MapPin size={25} color="red" />
-                  <p className="text-[#FF6F00]">{activeLocation.address}</p>
+                  <p className="text-[#2a2a92]">{activeLocation.address}</p>
                 </div>
                 <p className="text-justify mt-2">
                   {activeLocation.description}

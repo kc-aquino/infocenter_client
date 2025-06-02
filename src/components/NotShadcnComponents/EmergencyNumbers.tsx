@@ -26,7 +26,7 @@ const EmergencyNumbers: React.FC<EmergencyNumbersProps> = ({
   return (
     <div className="relative flex flex-col bg-white w-full md:rounded-lg shadow-md drop-shadow-2xl text-white">
       <div
-        className="bg-[#FF6F00] w-full h-[60px] rounded-lg drop-shadow-lg flex items-center justify-between text-md font-bold p-5 cursor-pointer hover:bg-gradient-to-b from-orange-500 to-blue-300"
+        className="bg-[#2a2a92] w-full h-[60px] rounded-lg drop-shadow-lg flex items-center justify-between text-md font-bold p-5 cursor-pointer hover:bg-gradient-to-b from-[#2a2a92] to-blue-300"
         onClick={() => setIsOpen(!isOpen)}
       >
         {title} {Logo && <Logo className="w-5 h-5 text-white" />}
@@ -42,7 +42,7 @@ const EmergencyNumbers: React.FC<EmergencyNumbersProps> = ({
                     <span>{num}</span>
                     <a
                       href="#"
-                      className="text-[#FF6F00] underline font-bold text-xs cursor-pointer"
+                      className="text-[#2a2a92] underline font-bold text-xs cursor-pointer"
                       onClick={() => copyToClipboard(num)}
                     >
                       Copy
@@ -55,7 +55,7 @@ const EmergencyNumbers: React.FC<EmergencyNumbersProps> = ({
                   {Landline && (
                     <a
                       href="#"
-                      className="text-[#FF6F00] underline font-bold text-xs  cursor-pointer"
+                      className="text-[#2a2a92] underline font-bold text-xs  cursor-pointer"
                       onClick={() => copyToClipboard(Landline)}
                     >
                       Copy
@@ -75,7 +75,7 @@ const EmergencyNumbers: React.FC<EmergencyNumbersProps> = ({
                     <span>{num}</span>
                     <a
                       href="#"
-                      className="text-[#FF6F00] underline font-bold text-xs cursor-pointer"
+                      className="text-[#2a2a92] underline font-bold text-xs cursor-pointer"
                       onClick={() => copyToClipboard(num)}
                     >
                       Copy
@@ -88,7 +88,7 @@ const EmergencyNumbers: React.FC<EmergencyNumbersProps> = ({
                   {Mobile && (
                     <a
                       href="#"
-                      className="text-[#FF6F00] underline font-bold text-xs cursor-pointer"
+                      className="text-[#2a2a92] underline font-bold text-xs cursor-pointer"
                       onClick={() => copyToClipboard(Mobile)}
                     >
                       Copy

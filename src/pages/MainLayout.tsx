@@ -47,7 +47,7 @@ export default function Page() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbPage className="line-clamp-1 font-semibold text-lg text-orange-500">
+                  <BreadcrumbPage className="line-clamp-1 font-semibold text-lg text-[#2a2a92]">
                     {pageTitle}
                   </BreadcrumbPage>
                 </BreadcrumbItem>
@@ -55,7 +55,7 @@ export default function Page() {
             </Breadcrumb>
           </div>
         </header>
-        <Separator className="bg-orange-400 w-full" />
+        <Separator className="bg-[#2a2a92] w-full" />
         <div className="flex flex-1 flex-col">
           <Outlet /> {/* Render nested routes */}
         </div>

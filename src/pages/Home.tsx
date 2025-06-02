@@ -152,13 +152,13 @@ function Home() {
               </div>
             ) : (
               <div 
-                className={`bg-[#FF6F00] text-white h-full w-full p-8 flex flex-col justify-center items-start md:rounded-xl transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+                className={`bg-[#2a2a92] text-white h-full w-full p-8 flex flex-col justify-center items-start md:rounded-xl transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
               >
                 <div className="flex gap-3 mb-4">
-                  <Badge className="bg-white text-[#FF6F00]">
+                  <Badge className="bg-white text-[#2a2a92]">
                     {currentAdvisory?.type.toUpperCase()}
                   </Badge>
-                  <Badge className="bg-white text-[#FF6F00]">
+                  <Badge className="bg-white text-[#2a2a92]">
                     {currentAdvisory?.advisoryStatus}
                   </Badge>
                 </div>
@@ -193,7 +193,7 @@ function Home() {
 
          {/* About Us Section */}
         <div className="flex flex-col w-full h-full xl:w-1/4 rounded-xl text-white">
-          <div className="bg-[#FF6F00] p-5 flex flex-col gap-1 justify-between w-full h-full rounded-t-xl">
+          <div className="bg-[#2a2a92] p-5 flex flex-col gap-1 justify-between w-full h-full rounded-t-xl">
             <h2 className="text-md font-bold">About Us</h2>
             <div className="bg-no-repeat bg-cover w-full flex justify-center">
               <img src={AboutUsImg} alt="About Us" className="rounded-lg" />
@@ -218,18 +218,18 @@ function Home() {
              {/* SMS Alert Section */}
             <div className="flex flex-col gap-5 justify-center items-center">
               <a href="/register" className="p-5 bg-white rounded-lg text-center text-black">
-                <h1 className="text-md font-semibold text-[#FF6F00]">Receive an SMS Alert!</h1>
+                <h1 className="text-md font-semibold text-[#2a2a92]">Receive an SMS Alert!</h1>
               </a>
             </div>
           </div>
           <div className="bg-white rounded-b-xl">
              {/* Social Media Links */}
-            <div className="flex flex-row justify-between p-5 h-20 border border-[#FF6F00] rounded-b-xl">
+            <div className="flex flex-row justify-between p-5 h-20 border border-[#2a2a92] rounded-b-xl">
               <a
                 href="https://www.facebook.com/share/1BddTEECtQ/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white hover:bg-[#FF6F00] rounded-full p-2 transition duration-300"
+                className="bg-white hover:bg-[#2a2a92] rounded-full p-2 transition duration-300"
               >
                 <Facebook className="w-full h-full text-blue-600 hover:text-blue-800 transition duration-300" />
               </a>
@@ -237,7 +237,7 @@ function Home() {
                 href="https://www.facebook.com/share/1BddTEECtQ/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white hover:bg-[#FF6F00] rounded-full p-2 transition duration-300"
+                className="bg-white hover:bg-[#2a2a92] rounded-full p-2 transition duration-300"
               >
                 <Twitter className="w-full h-full text-blue-400 hover:text-blue-600 transition duration-300" />
               </a>
@@ -245,7 +245,7 @@ function Home() {
                 href="https://www.facebook.com/share/1BddTEECtQ/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white hover:bg-[#FF6F00] rounded-full p-2 transition duration-300"
+                className="bg-white hover:bg-[#2a2a92] rounded-full p-2 transition duration-300"
               >
                 <Instagram className="w-full h-full text-pink-600 hover:text-pink-800 transition duration-300" />
               </a>
@@ -253,7 +253,7 @@ function Home() {
                 href="https://www.facebook.com/share/1BddTEECtQ/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white hover:bg-[#FF6F00] rounded-full p-2 transition duration-300"
+                className="bg-white hover:bg-[#2a2a92] rounded-full p-2 transition duration-300"
               >
                 <Youtube className="w-full h-full text-red-600 hover:text-red-800 transition duration-300" />
               </a>
@@ -268,8 +268,8 @@ function Home() {
       
       {/* Global Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-5 right-5 bg-white text-[#FF6F00] text-xs px-5 py-3 rounded-md shadow-md transition-opacity duration-300 flex gap-10 pl-0">
-          <div className='bg-[#FF6F00] w-1'></div>
+        <div className="fixed top-5 right-5 bg-white text-[#2a2a92] text-xs px-5 py-3 rounded-md shadow-md transition-opacity duration-300 flex gap-10 pl-0">
+          <div className='bg-[#2a2a92] w-1'></div>
           {toastMessage}
         </div>
       )}

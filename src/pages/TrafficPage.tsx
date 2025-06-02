@@ -78,7 +78,7 @@ const TrafficPage = () => {
 
   return (
     <div className="m-0 md:m-10 md:my-5 overflow-hidden">
-      <div className="bg-orange-500 text-white flex justify-between items-center rounded-0 md:rounded-xl p-6 m-6 mb-0 h-auto">
+      <div className="bg-[#2a2a92] text-white flex justify-between items-center rounded-0 md:rounded-xl p-6 m-6 mb-0 h-auto">
         <div className=" sm:flex-row sm:items-center sm:justify-between w-full">
           <div>
             <h2 className="text-sm font-semibold">
@@ -93,7 +93,7 @@ const TrafficPage = () => {
               Live.
             </p>
             <Button
-              className="bg-white text-orange-500 font-semibold px-3 py-2 w-full sm:w-auto text-sm text-center whitespace-nowrap"
+              className="bg-white text-[#2a2a92] font-semibold px-3 py-2 w-full sm:w-auto text-sm text-center whitespace-nowrap"
               onClick={() => window.open(fbPageLink, '_blank')}
             >
               Click to visit Facebook Page

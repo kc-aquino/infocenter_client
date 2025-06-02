@@ -34,7 +34,7 @@ const WeatherPage = () => {
                     </span>
                 </div>
             </div>
-            <div className='flex justify-flex items-end md:rounded-xl md:border border-orange-500 bg-no-repeat bg-cover bg-white w-full h-auto p-3 overflow-x-auto'>
+            <div className='flex justify-flex items-end md:rounded-xl md:border border-[#2a2a92] bg-no-repeat bg-cover bg-white w-full h-auto p-3 overflow-x-auto'>
 
                 <div className='flex justify-center items-center'>
                     <div className="w-[250px] h-full">

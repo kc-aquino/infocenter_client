@@ -20,7 +20,7 @@ interface WeatherChartProps {
 const chartConfig = {
   temp: {
     label: "Avg Temperature (°C)",
-    color: "#FF6F00", // Orange
+    color: "#2a2a92", // Orange
   },
 } satisfies ChartConfig;
 
@@ -39,7 +39,7 @@ const WeatherChart: React.FC<WeatherChartProps> = ({ weatherData }) => {
   const latestData = chartData[chartData.length - 7];
 
   return (
-    <Card className="lg:px-20 border-orange-500">
+    <Card className="lg:px-20 border-[#2a2a92]">
       <CardHeader>
       </CardHeader>
       <CardContent className="relative">

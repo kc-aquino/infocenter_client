@@ -71,9 +71,9 @@ import {
           <div
             className={` ${
               header.image
-                ? "bg-orange-500 text-white flex justify-between items-center rounded-none md:rounded-xl"
+                ? "bg-[#2a2a92] text-white flex justify-between items-center rounded-none md:rounded-xl"
                 : header.type === "garbage"
-                ? "bg-orange-500 text-white flex justify-between items-center rounded-none md:rounded-xl p-6"
+                ? "bg-[#2a2a92] text-white flex justify-between items-center rounded-none md:rounded-xl p-6"
                 : ""
             }`}
           >
@@ -131,7 +131,7 @@ import {
               <div
                 key={index}
                 className={`p-4 rounded-lg flex justify-between items-start shadow-sm ${
-                  advisory === nearestAdvisory ? "bg-orange-500 text-white" : "bg-white"
+                  advisory === nearestAdvisory ? "bg-[#2a2a92] text-white" : "bg-white"
                 }`}
               >
                 <Accordion
@@ -147,8 +147,8 @@ import {
                           <Badge
                             className={`text-xs ${
                               advisory === nearestAdvisory
-                                ? "bg-white text-orange-500"
-                                : "bg-orange-500 text-white"
+                                ? "bg-white text-[#2a2a92]"
+                                : "bg-[#2a2a92] text-white"
                             }`}
                           >
                             {advisory.advisoryStatus}

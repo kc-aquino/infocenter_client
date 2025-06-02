@@ -94,7 +94,7 @@ export default function RegisterPage() {
         <Card className="w-full bg-white/80 shadow-lg rounded-lg max-h-screen md:max-h-[90vh] overflow-y-auto">
           <div className="flex flex-col items-center p-6">
             <img src={brgLogo} alt="Barangay Logo" className="w-24 h-24 mb-4" />
-            <h2 className="text-xl md:text-2xl font-semibold text-center text-[#FF6F00]">
+            <h2 className="text-xl md:text-2xl font-semibold text-center text-[#2a2a92]">
               Barangay Dampalit InfoCenter
             </h2>
             <p className="text-gray-500 text-sm mt-2">Register Account</p>
