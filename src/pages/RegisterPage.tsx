@@ -53,37 +53,49 @@ export default function RegisterPage() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      setLoading(true);
+  try {
+    setLoading(true);
 
-      let contactNumber = values.contactNumber.replace(/\D/g, '');
-      if (contactNumber.length === 9) contactNumber = '639' + contactNumber;
+    let contactNumber = values.contactNumber.replace(/\D/g, '');
+    if (contactNumber.length === 9) contactNumber = '639' + contactNumber;
 
-      const response = await fetchData('api/register-sms', 'POST', {
-        FirstName: values.firstName,
-        MiddleName: values.middleName || null,
-        LastName: values.lastName,
-        ContactNumber: contactNumber,
-        email: values.email,
-      });
+    const response = await fetchData('api/register-sms', 'POST', {
+      FirstName: values.firstName,
+      MiddleName: values.middleName || null,
+      LastName: values.lastName,
+      ContactNumber: contactNumber,
+      email: values.email,
+    });
 
-      console.log('Registration Response:', response);
-      showToast('Registration successful!');
-      form.reset({
-          firstName: '',
-          middleName: '',
-          lastName: '',
-          contactNumber: '',
-          email: '',
-      });
-      setTimeout(() => navigate('/'), 3000);
-    } catch (error) {
-      console.error('Registration Error:', error);
+    console.log('Registration Response:', response);
+    showToast('Registration successful!');
+    form.reset({
+      firstName: '',
+      middleName: '',
+      lastName: '',
+      contactNumber: '',
+      email: '',
+    });
+    setTimeout(() => navigate('/'), 3000);
+  } catch (error: any) {
+    console.error('Registration Error:', error);
+
+    // Check if error is a validation error from Laravel (status 422)
+    if (error.status === 422 && error.data?.errors) {
+      // Extract all validation error messages and join them
+      const messages = Object.values(error.data.errors)
+        .flat()
+        .join(' ');
+
+      showToast(messages);
+    } else {
       showToast('Failed to register. Please try again.');
-    } finally {
-      setLoading(false);
     }
+  } finally {
+    setLoading(false);
   }
+}
+
 
   return (
     <div
@@ -217,7 +229,7 @@ export default function RegisterPage() {
 
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-5 right-5 bg-white text-[#FF6F00] text-xs px-5 py-3 rounded-md shadow-md transition-opacity duration-300 flex gap-10 pl-0">
+        <div className="fixed top-5 right-5 bg-white text-[#2a2a92] text-xs px-5 py-3 rounded-md shadow-md transition-opacity duration-300 flex gap-10 pl-0">
           <div className='bg-[#FF6F00] w-1'></div>
           {toastMessage}
         </div>

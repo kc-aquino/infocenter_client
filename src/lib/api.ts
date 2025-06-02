@@ -13,23 +13,38 @@ export const fetchData = async (
   }
 
   try {
+    const headers: HeadersInit = {
+      Accept: 'application/json',
+    };
+
+    // Only set Content-Type if method isn't GET and not sending FormData
+    if (method !== 'GET' && !(body instanceof FormData)) {
+      headers['Content-Type'] = 'application/json';
+    }
+
     const options: RequestInit = {
       method,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: body ? JSON.stringify(body) : undefined,
+      headers,
     };
+
+    if (method !== 'GET') {
+      options.body = body instanceof FormData ? body : JSON.stringify(body);
+    }
 
     const response = await fetch(`${API_URL}/${endpoint}`, options);
 
+    const data = await response.json();
+
     if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
+      const error: any = new Error(`Error: ${response.status}`);
+      error.status = response.status;
+      error.data = data;
+      throw error;
     }
 
-    return await response.json();
+    return data;
   } catch (error) {
     console.error('API Fetch Error:', error);
-    return [];
+    throw error; // ← Return real error so frontend can handle it
   }
 };
