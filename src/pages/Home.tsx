@@ -13,7 +13,7 @@ interface Advisory {
   advisoryDescription: string;
   advisoryStatus: string;
   advisoryDate: string;
-  type: 'fire' | 'flood' | 'tsunami' | 'garbage';
+  type: 'fire' | 'flood' | 'tsunami' | 'garbage' | 'utility';
   originalDate: Date;
 }
 
@@ -31,11 +31,12 @@ function Home() {
   useEffect(() => {
     const fetchLatestAdvisory = async () => {
       try {
-        const [fireData, floodData, tsunamiData, garbageData] = await Promise.all([
+        const [fireData, floodData, tsunamiData, garbageData, utilityData] = await Promise.all([
           fetchData('api/get-fire'),
           fetchData('api/get-floods'),
           fetchData('api/get-tsunamis'),
-          fetchData('api/get-garbage-collection')
+          fetchData('api/get-garbage-collection'),
+          fetchData('api/get-utility')
         ]);
 
         const allAdvisories: Advisory[] = [];
@@ -96,6 +97,19 @@ function Home() {
             });
           });
         }
+
+      if (utilityData && utilityData.length > 0) {
+        utilityData.forEach((utility: any) => {
+          allAdvisories.push({
+            advisoryName: utility.name,
+            advisoryDescription: utility.description,
+            advisoryStatus: utility.status,
+            advisoryDate: new Date(utility.date).toLocaleString(),
+            type: 'utility',
+            originalDate: new Date(utility.date)
+           });
+         });
+       }
 
         // Sort by date (newest first)
         allAdvisories.sort((a, b) => b.originalDate.getTime() - a.originalDate.getTime());
