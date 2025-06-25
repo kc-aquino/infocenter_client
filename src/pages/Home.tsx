@@ -6,7 +6,7 @@ import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import AboutUsImg from '@/assets/about.png';
 import { fetchData } from '@/lib/api';
-import { Badge } from "@/components/ui/badge";
+import { Badge } from '@/components/ui/badge';
 
 interface Advisory {
   advisoryName: string;
@@ -22,6 +22,8 @@ function Home() {
   const [currentAdvisory, setCurrentAdvisory] = useState<Advisory | null>(null);
   const [showDefaultHeader, setShowDefaultHeader] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
+  const [allAdvisories, setAllAdvisories] = useState([]); // Store all advisories
+  const [currentAdvisoryIndex, setCurrentAdvisoryIndex] = useState(0); // Current carousel index
 
   const showToast = (message: string) => {
     setToastMessage(message);
@@ -31,116 +33,104 @@ function Home() {
   useEffect(() => {
     const fetchLatestAdvisory = async () => {
       try {
-        const [fireData, floodData, tsunamiData, garbageData, utilityData] = await Promise.all([
-          fetchData('api/get-fire'),
-          fetchData('api/get-floods'),
-          fetchData('api/get-tsunamis'),
-          fetchData('api/get-garbage-collection'),
-          fetchData('api/get-utility')
-        ]);
+        const response = await fetchData('api/get-recent-announcements');
 
-        const allAdvisories: Advisory[] = [];
-
-        // Process fire data
-        if (fireData && fireData.length > 0) {
-          fireData.forEach((fire: any) => {
-            allAdvisories.push({
-              advisoryName: fire.name,
-              advisoryDescription: fire.description,
-              advisoryStatus: fire.status === 'option1' ? 'Ongoing' : 
-                           fire.status === 'option2' ? 'Fire Out' : 'Unknown',
-              advisoryDate: new Date(fire.date).toLocaleString(),
-              type: 'fire',
-              originalDate: new Date(fire.date)
-            });
-          });
+        if (!response.success || !response.data) {
+          console.error('Failed to fetch advisory data');
+          return;
         }
 
-        // Process flood data
-        if (floodData && floodData.length > 0) {
-          floodData.forEach((flood: any) => {
-            allAdvisories.push({
-              advisoryName: flood.name,
-              advisoryDescription: flood.description,
-              advisoryStatus: flood.severity,
-              advisoryDate: new Date(flood.date).toLocaleString(),
-              type: 'flood',
-              originalDate: new Date(flood.date)
-            });
-          });
-        }
+        // Filter out items with no actual data and convert to advisory format
+        const validAdvisories = response.data
+          .filter(item => item.message !== 'No announcement yet' && item.name)
+          .map(item => ({
+            advisoryName: item.name,
+            advisoryDescription: item.description,
+            advisoryStatus: getFormattedStatus(item),
+            advisoryDate: getFormattedDate(item),
+            type: item.tag,
+            originalDate: new Date(getDateField(item)),
+          }));
 
-        // Process tsunami data
-        if (tsunamiData && tsunamiData.length > 0) {
-          tsunamiData.forEach((tsunami: any) => {
-            allAdvisories.push({
-              advisoryName: tsunami.name,
-              advisoryDescription: tsunami.description,
-              advisoryStatus: tsunami.severity,
-              advisoryDate: new Date(tsunami.date).toLocaleString(),
-              type: 'tsunami',
-              originalDate: new Date(tsunami.date)
-            });
-          });
+        if (validAdvisories.length === 0) {
+          return; // No valid advisories found
         }
-
-        // Process garbage data
-        if (garbageData && garbageData.length > 0) {
-          garbageData.forEach((garbage: any) => {
-            allAdvisories.push({
-              advisoryName: garbage.name || 'No name provided',
-              advisoryDescription: garbage.description || 'No description available',
-              advisoryStatus: garbage.status || 'Unknown',
-              advisoryDate: garbage.time ? new Date(garbage.time).toLocaleString() : 'No date provided',
-              type: 'garbage',
-              originalDate: garbage.time ? new Date(garbage.time) : new Date()
-            });
-          });
-        }
-
-      if (utilityData && utilityData.length > 0) {
-        utilityData.forEach((utility: any) => {
-          allAdvisories.push({
-            advisoryName: utility.name,
-            advisoryDescription: utility.description,
-            advisoryStatus: utility.status,
-            advisoryDate: new Date(utility.date).toLocaleString(),
-            type: 'utility',
-            originalDate: new Date(utility.date)
-           });
-         });
-       }
 
         // Sort by date (newest first)
-        allAdvisories.sort((a, b) => b.originalDate.getTime() - a.originalDate.getTime());
+        const sortedAdvisories = validAdvisories.sort(
+          (a, b) => b.originalDate.getTime() - a.originalDate.getTime(),
+        );
 
-        // Get the most recent advisory if any exists
-        if (allAdvisories.length > 0) {
-          const latest = allAdvisories[0];
-          const now = new Date();
-          const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
-          
-          if (latest.originalDate > twentyFourHoursAgo) {
-            setCurrentAdvisory(latest);
-            setShowDefaultHeader(false);
-            setIsVisible(true);
-            
-            // Set timeout to revert to default after 5 minutes
-            const timeout = setTimeout(() => {
+        // Check if we have any advisories within last 24 hours
+
+        const recentAdvisories = sortedAdvisories;
+
+        if (recentAdvisories.length > 0) {
+          setAllAdvisories(recentAdvisories); // Set all recent advisories for carousel
+          setCurrentAdvisoryIndex(0); // Start with first advisory
+          setShowDefaultHeader(false);
+          setIsVisible(true);
+
+          // Start carousel auto-rotation (change every 5 seconds)
+          const carouselInterval = setInterval(() => {
+            setCurrentAdvisoryIndex(prev =>
+              prev >= recentAdvisories.length - 1 ? 0 : prev + 1,
+            );
+          }, 5000);
+
+          // Auto-hide entire carousel after 2 minutes
+          const hideTimeout = setTimeout(
+            () => {
               setIsVisible(false);
+              clearInterval(carouselInterval);
               setTimeout(() => {
                 setShowDefaultHeader(true);
               }, 300);
-            }, 5 * 60 * 1000);
-            
-            return () => clearTimeout(timeout);
-          }
+            },
+            2 * 60 * 1000,
+          );
+
+          return () => {
+            clearTimeout(hideTimeout);
+            clearInterval(carouselInterval);
+          };
         }
       } catch (error) {
         console.error('Failed to fetch advisory data:', error);
       }
     };
 
+    // Helper function to get the appropriate date field
+    const getDateField = item => {
+      return item.time || item.date || new Date().toISOString();
+    };
+
+    // Helper function to format date
+    const getFormattedDate = item => {
+      const dateValue = getDateField(item);
+      return new Date(dateValue).toLocaleString();
+    };
+
+    // Helper function to format status based on type
+    const getFormattedStatus = item => {
+      switch (item.tag) {
+        case 'fire':
+          return item.status === 'option1'
+            ? 'Ongoing'
+            : item.status === 'option2'
+              ? 'Fire Out'
+              : item.status || 'Unknown';
+        case 'flood':
+        case 'tsunami':
+          return item.severity || 'Unknown';
+        case 'traffic':
+          return item.reason || 'Unknown';
+        case 'garbage':
+        case 'utility':
+        default:
+          return item.status || 'Unknown';
+      }
+    };
     fetchLatestAdvisory();
 
     // Check for new advisories every minute
@@ -158,34 +148,107 @@ function Home() {
               <div className="bg-no-repeat bg-cover bg-right-bottom bg-[url('/src/assets/registerBG.png')] h-full w-full p-5 flex justify-end items-end md:rounded-xl">
                 <div className="flex flex-col text-white p-5 rounded-lg justify-end items-start">
                   <h1 className="text-lg font-black">EMERGENCY NUMBERS</h1>
-                  <div className='flex flex-col items-start'>
+                  <div className="flex flex-col items-start">
                     <h3>Find the emergency numbers for your area.</h3>
                     <h3>If you are in immediate danger, call 911.</h3>
                   </div>
                 </div>
               </div>
             ) : (
-              <div 
-                className={`bg-[#2a2a92] text-white h-full w-full p-8 flex flex-col justify-center items-start md:rounded-xl transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+              <div
+                className={`bg-[#2a2a92] text-white h-full w-full relative md:rounded-xl transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
               >
-                <div className="flex gap-3 mb-4">
-                  <Badge className="bg-white text-[#2a2a92]">
-                    {currentAdvisory?.type.toUpperCase()}
-                  </Badge>
-                  <Badge className="bg-white text-[#2a2a92]">
-                    {currentAdvisory?.advisoryStatus}
-                  </Badge>
+                {/* Carousel Content */}
+                <div className="p-8 flex flex-col justify-center items-start h-full">
+                  <div className="flex gap-3 mb-4">
+                    <Badge className="bg-white text-[#2a2a92]">
+                      {allAdvisories[currentAdvisoryIndex]?.type.toUpperCase()}
+                    </Badge>
+                    <Badge className="bg-white text-[#2a2a92]">
+                      {allAdvisories[currentAdvisoryIndex]?.advisoryStatus}
+                    </Badge>
+                  </div>
+                  <h1 className="text-2xl font-bold mb-2">LATEST ALERTS</h1>
+                  <h2 className="text-xl font-semibold mb-3">
+                    {allAdvisories[currentAdvisoryIndex]?.advisoryName}
+                  </h2>
+                  <p className="text-base mb-4">
+                    {allAdvisories[currentAdvisoryIndex]?.advisoryDescription}
+                  </p>
+                  <p className="text-sm opacity-90 mb-4">
+                    Posted: {allAdvisories[currentAdvisoryIndex]?.advisoryDate}
+                  </p>
                 </div>
-                <h1 className="text-2xl font-bold mb-2">LATEST ALERT</h1>
-                <h2 className="text-xl font-semibold mb-3">
-                  {currentAdvisory?.advisoryName}
-                </h2>
-                <p className="text-base mb-4">
-                  {currentAdvisory?.advisoryDescription}
-                </p>
-                <p className="text-sm opacity-90">
-                  Posted: {currentAdvisory?.advisoryDate}
-                </p>
+
+                {/* Carousel Controls */}
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+                  {allAdvisories.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentAdvisoryIndex(index)}
+                      className={`w-2 h-2 rounded-full transition-colors duration-200 ${
+                        index === currentAdvisoryIndex
+                          ? 'bg-white'
+                          : 'bg-white/50'
+                      }`}
+                    />
+                  ))}
+                </div>
+
+                {/* Navigation Arrows (Optional) */}
+                {allAdvisories.length > 1 && (
+                  <>
+                    <button
+                      onClick={() =>
+                        setCurrentAdvisoryIndex(prev =>
+                          prev === 0 ? allAdvisories.length - 1 : prev - 1,
+                        )
+                      }
+                      className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/70 hover:text-white transition-colors"
+                    >
+                      <svg
+                        className="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M15 19l-7-7 7-7"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      onClick={() =>
+                        setCurrentAdvisoryIndex(prev =>
+                          prev >= allAdvisories.length - 1 ? 0 : prev + 1,
+                        )
+                      }
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/70 hover:text-white transition-colors"
+                    >
+                      <svg
+                        className="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </button>
+                  </>
+                )}
+
+                {/* Counter */}
+                <div className="absolute top-4 right-4 text-white/70 text-sm">
+                  {currentAdvisoryIndex + 1} / {allAdvisories.length}
+                </div>
               </div>
             )}
           </div>
@@ -205,7 +268,7 @@ function Home() {
           </div>
         </div>
 
-         {/* About Us Section */}
+        {/* About Us Section */}
         <div className="flex flex-col w-full h-full xl:w-1/4 rounded-xl text-white">
           <div className="bg-[#2a2a92] p-5 flex flex-col gap-1 justify-between w-full h-full rounded-t-xl">
             <h2 className="text-md font-bold">About Us</h2>
@@ -229,15 +292,20 @@ function Home() {
               ))}
             </div>
 
-             {/* SMS Alert Section */}
+            {/* SMS Alert Section */}
             <div className="flex flex-col gap-5 justify-center items-center">
-              <a href="/register" className="p-5 bg-white rounded-lg text-center text-black">
-                <h1 className="text-md font-semibold text-[#2a2a92]">Receive an SMS Alert!</h1>
+              <a
+                href="/register"
+                className="p-5 bg-white rounded-lg text-center text-black"
+              >
+                <h1 className="text-md font-semibold text-[#2a2a92]">
+                  Receive an SMS Alert!
+                </h1>
               </a>
             </div>
           </div>
           <div className="bg-white rounded-b-xl">
-             {/* Social Media Links */}
+            {/* Social Media Links */}
             <div className="flex flex-row justify-between p-5 h-20 border border-[#2a2a92] rounded-b-xl">
               <a
                 href="https://www.facebook.com/share/1BddTEECtQ/"
@@ -272,18 +340,18 @@ function Home() {
                 <Youtube className="w-full h-full text-red-600 hover:text-red-800 transition duration-300" />
               </a>
             </div>
-             {/* Terms and Privacy */}
+            {/* Terms and Privacy */}
             <div className="text-center p-3">
               <TermsAndPrivacyDialog />
             </div>
           </div>
         </div>
       </div>
-      
+
       {/* Global Toast Notification */}
       {toastMessage && (
         <div className="fixed top-5 right-5 bg-white text-[#2a2a92] text-xs px-5 py-3 rounded-md shadow-md transition-opacity duration-300 flex gap-10 pl-0">
-          <div className='bg-[#2a2a92] w-1'></div>
+          <div className="bg-[#2a2a92] w-1"></div>
           {toastMessage}
         </div>
       )}
@@ -292,3 +360,4 @@ function Home() {
 }
 
 export default Home;
+
