@@ -59,7 +59,8 @@ function Home() {
 
         // Sort by date (newest first)
         const sortedAdvisories = validAdvisories.sort(
-          (a, b) => b.originalDate.getTime() - a.originalDate.getTime(),
+          (a: any, b: any) =>
+            b.originalDate.getTime() - a.originalDate.getTime(),
         );
 
         // Check if we have any advisories within last 24 hours
@@ -102,18 +103,18 @@ function Home() {
     };
 
     // Helper function to get the appropriate date field
-    const getDateField = item => {
+    const getDateField = (item: any) => {
       return item.time || item.date || new Date().toISOString();
     };
 
     // Helper function to format date
-    const getFormattedDate = item => {
+    const getFormattedDate = (item: any) => {
       const dateValue = getDateField(item);
       return new Date(dateValue).toLocaleString();
     };
 
     // Helper function to format status based on type
-    const getFormattedStatus = item => {
+    const getFormattedStatus = (item: any) => {
       switch (item.tag) {
         case 'fire':
           return item.status === 'option1'
