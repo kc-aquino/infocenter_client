@@ -19,10 +19,9 @@ interface Advisory {
 
 function Home() {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const [currentAdvisory, setCurrentAdvisory] = useState<Advisory | null>(null);
   const [showDefaultHeader, setShowDefaultHeader] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
-  const [allAdvisories, setAllAdvisories] = useState([]); // Store all advisories
+  const [allAdvisories, setAllAdvisories] = useState<Advisory[]>([]);
   const [currentAdvisoryIndex, setCurrentAdvisoryIndex] = useState(0); // Current carousel index
 
   const showToast = (message: string) => {
@@ -42,8 +41,10 @@ function Home() {
 
         // Filter out items with no actual data and convert to advisory format
         const validAdvisories = response.data
-          .filter(item => item.message !== 'No announcement yet' && item.name)
-          .map(item => ({
+          .filter(
+            (item: any) => item.message !== 'No announcement yet' && item.name,
+          )
+          .map((item: any) => ({
             advisoryName: item.name,
             advisoryDescription: item.description,
             advisoryStatus: getFormattedStatus(item),
@@ -360,4 +361,3 @@ function Home() {
 }
 
 export default Home;
-
