@@ -72,13 +72,10 @@ export const AboutUs: DataFile[] = [
 export const ContactUs: DataFile[] = [
   {
     title1:
-      'Customer Support: +63 917 123 4567 (Mon–Fri, 9AM–6PM) | Emergency: +63 998 765 4321 (24/7)',
+      'Support: +63 917 123 4567 (Mon–Fri, 9AM–6PM) | Emergency: +63 998 765 4321 (24/7)',
     description: 'https://facebook.com/brgydampalit.2023',
   },
 ];
-
-
-
 
 const API_URL = import.meta.env.VITE_WEATHER_API_URL;
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
