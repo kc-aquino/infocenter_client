@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Advisories } from '../components/advisories';
-import Tsunami from '../assets/Tsunami.png';
+import Tsunami from '../assets/Tsunami.jpg';
 import { fetchData } from '@/lib/api';
 
 interface Advisory {
