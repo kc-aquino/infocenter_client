@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Advisories } from '../components/advisories';
-import Fire from '../assets/Fire.png';
+import Fire from '../assets/Fire.jpg';
 import { fetchData } from '@/lib/api';
 
 interface FireAdvisory {
