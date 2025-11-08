@@ -36,7 +36,7 @@ const WeatherChart: React.FC<WeatherChartProps> = ({ weatherData }) => {
   }));
 
   // Get the last day's data to display in a "fixed tooltip"
-  const latestData = chartData[chartData.length - 7];
+  const latestData = chartData[chartData.length - 1];
 
   return (
     <Card className="lg:px-20 border-[#2a2a92]">
