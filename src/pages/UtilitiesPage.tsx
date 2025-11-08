@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Advisories } from '../components/advisories';
-import Utilities from '../assets/Utilities.png';
+import Utilities from '../assets/Utilities.jpg';
 import { fetchData } from '@/lib/api';
 
 interface Advisory {
