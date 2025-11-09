@@ -4,7 +4,7 @@ import { DataNum, AboutUs, ContactUs } from '@/components/data-file';
 import TermsAndPrivacyDialog from '@/components/termsAndPrivacyDialog';
 import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import AboutUsImg from '@/assets/about.png';
+import HomePic from '@/assets/Home pic.jpg';
 import { fetchData } from '@/lib/api';
 import { Badge } from '@/components/ui/badge';
 
@@ -23,6 +23,10 @@ function Home() {
   const [isVisible, setIsVisible] = useState(false);
   const [allAdvisories, setAllAdvisories] = useState<Advisory[]>([]);
   const [currentAdvisoryIndex, setCurrentAdvisoryIndex] = useState(0); // Current carousel index
+  const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
+    vision: false,
+    mission: false,
+  });
 
   const showToast = (message: string) => {
     setToastMessage(message);
@@ -143,18 +147,12 @@ function Home() {
   return (
     <>
       <div className="flex flex-col xl:flex-row h-full md:p-5 md:gap-5">
-        <div className="flex flex-col w-full xl:w-3/4 md:gap-5">
+        <div className="flex flex-col w-full xl:flex-[3] md:gap-5">
           {/* Header Section - Switches between default and advisory */}
-          <div className="h-[298px]">
+          <div className="h-[200px] sm:h-[250px] md:h-[298px]">
             {showDefaultHeader ? (
-              <div className="bg-no-repeat bg-cover bg-right-bottom bg-[url('/src/assets/registerBG.png')] h-full w-full p-5 flex justify-end items-end md:rounded-xl">
-                <div className="flex flex-col text-white p-5 rounded-lg justify-end items-start">
-                  <h1 className="text-lg font-black">EMERGENCY NUMBERS</h1>
-                  <div className="flex flex-col items-start">
-                    <h3>Find the emergency numbers for your area.</h3>
-                    <h3>If you are in immediate danger, call 911.</h3>
-                  </div>
-                </div>
+              <div className="bg-no-repeat bg-cover bg-center h-full w-full md:rounded-xl overflow-hidden">
+                <img src={HomePic} alt="Home" className="w-full h-full object-cover" />
               </div>
             ) : (
               <div
@@ -261,8 +259,12 @@ function Home() {
               <EmergencyNumbers
                 key={index}
                 title={data.title ?? 'No Title'}
-                Mobile={data.Mobile ?? 'No Number'}
-                Landline={data.Landline ?? 'No Number'}
+                Mobile={data.Mobile}
+                Landline={data.Landline}
+                Hotline={data.Hotline}
+                Schedule={data.Schedule}
+                Email={data.Email}
+                TextSMS={data.TextSMS}
                 logo={data.logo}
                 showToast={showToast}
               />
@@ -271,23 +273,35 @@ function Home() {
         </div>
 
         {/* About Us Section */}
-        <div className="flex flex-col w-full h-full xl:w-1/4 rounded-xl text-white">
+        <div className="flex flex-col w-full h-full xl:flex-[1] xl:min-w-[300px] xl:max-w-[400px] rounded-xl text-white">
           <div className="bg-[#2a2a92] p-5 flex flex-col gap-1 justify-between w-full h-full rounded-t-xl">
-            <h2 className="text-md font-bold">About Us</h2>
-            <div className="bg-no-repeat bg-cover w-full flex justify-center">
-              <img src={AboutUsImg} alt="About Us" className="rounded-lg" />
-            </div>
-            <div className="p-5 flex flex-col gap-5">
-              {AboutUs.map((item, index) => (
-                <div key={index}>
-                  <h1 className="text-sm font-semibold">{item.title1}</h1>
-                  <p className="text-xs">{item.description}</p>
-                </div>
-              ))}
-              <hr className="border-white opacity-40 my-1" />
-              <h2 className="text-sm font-bold mt-2">Contact Us</h2>
+            <div className="flex flex-col">
+              <h2 className="text-md font-bold mb-2">About Us</h2>
+              <div className="flex flex-col gap-2">
+              {AboutUs.map((item, index) => {
+                const sectionKey = item.title1?.toLowerCase().replace(/\s+/g, '') || `section-${index}`;
+                const isOpen = openSections[sectionKey] || false;
+                
+                return (
+                  <div key={index} className="flex flex-col">
+                    <div
+                      className="flex items-center justify-between cursor-pointer hover:opacity-80 transition-opacity"
+                      onClick={() => setOpenSections(prev => ({ ...prev, [sectionKey]: !isOpen }))}
+                    >
+                      <h1 className="text-sm font-semibold">{item.title1}</h1>
+                      <span className="text-xs">{isOpen ? '−' : '+'}</span>
+                    </div>
+                    <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                      <p className="text-xs mt-1">{item.description}</p>
+                    </div>
+                  </div>
+                );
+              })}
+              </div>
+              <hr className="border-white opacity-40 my-2" />
+              <h2 className="text-sm font-bold mb-2">Contact Us</h2>
               {ContactUs.map((item, index) => (
-                <div key={index}>
+                <div key={index} className="mb-2">
                   <h1 className="text-sm font-semibold">{item.title1}</h1>
                   <p className="text-xs">{item.description}</p>
                 </div>

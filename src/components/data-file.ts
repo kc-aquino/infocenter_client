@@ -5,6 +5,10 @@ import {
   HeartPulse,
   UtilityPole,
   Droplet,
+  Building,
+  Home,
+  Truck,
+  Zap,
 } from 'lucide-react';
 import axios from 'axios';
 
@@ -12,6 +16,10 @@ export interface DataFile {
   title?: string;
   Landline?: string | string[];
   Mobile?: string | string[];
+  Hotline?: string;
+  Schedule?: string;
+  Email?: string;
+  TextSMS?: string | string[];
   title1?: string;
   description?: string;
   logo?: React.ComponentType;
@@ -19,40 +27,44 @@ export interface DataFile {
 
 export const DataNum: DataFile[] = [
   {
-    title: 'Police',
-    Landline: ['82873652'],
-    logo: Siren,
-    Mobile: ['09217050770'],
+    title: 'Baranggay Office',
+    Hotline: '8-351-5223',
+    Schedule: 'Monday to Friday 8am-5pm',
+    Email: 'dampalit.malabon2023@gmail.com',
+    logo: Building,
   },
   {
-    title: 'Rescue',
-    Landline: ['8-921-6009', '8-921-6029'],
+    title: 'Baranggay Command Center',
+    Hotline: '0968-304-8471',
+    Schedule: 'Mon.-Fri 8am-5pm / Sat-Sun 9am-3pm',
+    Email: 'piodampalit.malabon2023@gmail.com',
     logo: LifeBuoy,
-    Mobile: ['09423729891', '09190625588'],
   },
   {
-    title: 'Fire',
-    Landline: ['(02) 8361 9712', '(02) 281-4607'],
-    logo: Flame,
-    Mobile: '09665000299',
+    title: 'Baranggay Merville Outpost',
+    Hotline: '0968-317-4165',
+    Schedule: '24/7',
+    logo: Home,
   },
   {
-    title: 'Medical',
-    Landline: ['8-921-6009', ' 8-921-6029'],
-    logo: HeartPulse,
-    Mobile: ['09423729891', '09190625588'],
+    title: 'Baranggay Rescue Vehicle',
+    Hotline: '0961-992-0955',
+    Schedule: '24/7',
+    logo: Truck,
   },
   {
     title: 'Power',
-    Landline: '(02) 16211',
-    logo: UtilityPole,
-    Mobile: '(02) 16211',
+    Hotline: '16211',
+    TextSMS: ['Smart - 0920-971-6211', 'Globe - 0917-551-6211'],
+    Email: 'customercare@meralco.com.ph',
+    logo: Zap,
   },
   {
     title: 'Water',
-    Landline: '1-800-1000-92837',
+    Hotline: '1626',
+    TextSMS: 'Smart - 0998-8641446',
+    Email: 'customer.helpdesk@mayniladwater.com.ph',
     logo: Droplet,
-    Mobile: '0998-8641446',
   },
 ];
 
@@ -71,9 +83,32 @@ export const AboutUs: DataFile[] = [
 
 export const ContactUs: DataFile[] = [
   {
-    title1:
-      'Support: +63 917 123 4567 (Mon–Fri, 9AM–6PM) | Emergency: +63 998 765 4321 (24/7)',
-    description: 'https://facebook.com/brgydampalit.2023',
+    title1: "LET'S CONNECT TxtMJS",
+    description: 'TXTMJS_KEYWORD_MESSAGE - SEND TO 0917-689-8657',
+  },
+  {
+    title1: 'MALABON CITY COMMAND CENTER',
+    description: '8-921-6029, 8-921-6009, 0942-372-9891',
+  },
+  {
+    title1: 'MALABON POLICE SS7 (HULONG DUHAT)',
+    description: '0963-420-4862',
+  },
+  {
+    title1: 'MALABON POLICE (CATMON)',
+    description: '0921-705-0770',
+  },
+  {
+    title1: 'BUREAU OF FIRE PROTECTION (MALABON)',
+    description: '0966-140-3605',
+  },
+  {
+    title1: 'TXTFIRE PHILIPPINES',
+    description: '0963-420-4862',
+  },
+  {
+    title1: 'UNITED FIRE',
+    description: '0921-705-0770',
   },
 ];
 
