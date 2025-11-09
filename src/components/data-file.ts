@@ -1,9 +1,5 @@
 import {
-  Siren,
   LifeBuoy,
-  Flame,
-  HeartPulse,
-  UtilityPole,
   Droplet,
   Building,
   Home,

@@ -5,3 +5,7 @@ declare module 'react' {
         [key: `--${string}`]: string | number | undefined;
     }
 }
+
+declare module 'leaflet' {
+    export * from 'leaflet';
+}
