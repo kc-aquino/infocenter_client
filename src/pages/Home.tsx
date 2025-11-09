@@ -300,12 +300,14 @@ function Home() {
               </div>
               <hr className="border-white opacity-40 my-2" />
               <h2 className="text-sm font-bold mb-2">Contact Us</h2>
-              {ContactUs.map((item, index) => (
-                <div key={index} className="mb-2">
-                  <h1 className="text-sm font-semibold">{item.title1}</h1>
-                  <p className="text-xs">{item.description}</p>
-                </div>
-              ))}
+              <div className="flex flex-col gap-1.5">
+                {ContactUs.map((item, index) => (
+                  <div key={index}>
+                    <h1 className="text-sm font-semibold mb-1">{item.title1}</h1>
+                    <p className="text-xs leading-snug">{item.description}</p>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* SMS Alert Section */}
